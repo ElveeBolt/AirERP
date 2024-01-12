@@ -1,0 +1,83 @@
+{% extends 'user/layouts/grid2_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+{% block content %}
+    <div class="card mb-4">
+        <div class="p-4">
+            <div class="card-header">
+                <h2 class="card-title">{% trans 'My ticket' %}</h2>
+                <div class="card-subtitle">{% trans 'Ticket detail information' %}</div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mb-4">
+                    <div class="font-semibold mb-3">{% trans 'Passenger info' %}</div>
+                    <div class="flex space-x-3 mb-2">
+                        <div class="text-gray-400">{% trans 'Name:' %}</div><div>{{ ticket.first_name }} {{ ticket.last_name }}</div>
+                    </div>
+                    <div class="flex space-x-3 mb-2">
+                        <div class="text-gray-400">{% trans 'Gender:' %}</div><div>{{ ticket.gender }}</div>
+                    </div>
+                    <div class="flex space-x-3 mb-2">
+                        <div class="text-gray-400">{% trans 'Date birth:' %}</div><div>{{ ticket.date_birth }}</div>
+                    </div>
+                    <div class="flex space-x-3 mb-2">
+                        <div class="text-gray-400">{% trans 'Citizenship:' %}</div><div>{{ ticket.citizenship }}</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="font-semibold mb-3">{% trans 'Document info' %}</div>
+                    <div class="flex space-x-3 mb-2">
+                        <div class="text-gray-400">{% trans 'Document type:' %}</div><div>{{ ticket.document_type }}</div>
+                    </div>
+                    <div class="flex space-x-3 mb-2">
+                        <div class="text-gray-400">{% trans 'Document serial:' %}</div><div>{{ ticket.document_serial }}</div>
+                    </div>
+                    <div class="flex space-x-3 mb-2">
+                        <div class="text-gray-400">{% trans 'Document date expiry:' %}</div><div>{{ ticket.document_date_expiry }}</div>
+                    </div>
+                </div>
+            </div>
+            <form method="get" action="{% url 'thanks' %}">
+                <div class="flex justify-end items-center space-x-4 pt-4 border-t border-gray-200">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-400">{% trans 'Total price:' %}</div>
+                        <div class="text-xl font-bold">{{ ticket_total_price }}$</div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" type="submit"><i class="las la-shopping-bag"></i>{% trans 'Buy ticket' %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block sideright %}
+<div class="card mb-4">
+    <div class="p-4">
+        <div class="card-header">
+            <h2 class="card-title">{% trans 'Flight detail' %}</h2>
+            <div class="card-subtitle">{% trans 'Your flight details' %}</div>
+        </div>
+        <div class="mb-4">
+            <span class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Departure from' %}</span>
+            <div>{{ ticket.flight.departure_from }}</div>
+        </div>
+        <div class="mb-4">
+            <span class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Arrival to' %}</span>
+            <div>{{ ticket.flight.arrival_to }}</div>
+        </div>
+        <div>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Departure time' %}</span>
+            <div>{{ ticket.flight.departure_time }}</div>
+        </div>
+    </div>
+</div>
+{% endblock sideright %}

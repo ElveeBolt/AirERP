@@ -1,0 +1,25 @@
+{% extends 'user/layouts/grid2_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+{% block content %}
+    <div class="card mb-4">
+        <div class="p-4">
+            <div class="card-header">
+                <h2 class="card-title">{% trans 'Thank you' %}</h2>
+                <div class="card-subtitle">{% trans 'Success payment ticket' %}</div>
+            </div>
+            <div class="flex space-x-3">
+                <a href="{% url 'user-ticket-pdf' pk=ticket.pk %}" class="btn btn-light">
+                    <i class="las la-file-pdf"></i>
+                    {% trans 'Download PDF' %}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% load i18n %}
+{% load static %}
+
+<nav class="bg-white dark:bg-gray-900 w-full z-20 h-16 border-b border-gray-200 dark:border-gray-600">
+  <div class="container flex flex-wrap items-center justify-between mx-auto px-4 py-2.5">
+  <a href="{% url 'index' %}" class="flex items-center space-x-2 text-black">
+      <img src="{% static 'images/logo.png' %}" class="h-10" alt="AirERP">
+      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">AirERP</span>
+  </a>
+  <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <button type="button" class="w-8 h-8 text-3xl flex rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom-end">
+            <span class="sr-only">Open user menu</span>
+              <div class="">
+                  <i class="las la-user-circle"></i>
+              </div>
+          </button>
+          <div id="user-dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+            <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+              <div class="font-medium ">{{ user }}</div>
+              <div class="truncate">{{ user.email }}</div>
+            </div>
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+              <li>
+                <a href="{% url 'user' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'My profile' %}</a>
+              </li>
+              <li>
+                <a href="{% url 'user-tickets' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'Ticket history' %}</a>
+              </li>
+              <li>
+                <a href="{% url 'change-password' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'Change password' %}</a>
+              </li>
+                {% if user.is_staff %}
+                  <li>
+                    <a href="{% url 'manager' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'Manager' %}</a>
+                  </li>
+                {% endif %}
+            </ul>
+            <div class="py-2">
+                <form method="post" action="{% url 'logout' %}" class="w-full">
+                    {% csrf_token %}
+                    <button type="submit" style="text-align: left;" class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                        {% trans 'Sign out' %}
+                    </button>
+                </form>
+            </div>
+        </div>
+      <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
+  </div>
+  <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+    <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+      <li><a href="{% url 'index' %}" class="navbar-link">{% trans 'Home' %}</a></li>
+      <li><a href="{% url 'aircrafts' %}" class="navbar-link">{% trans 'Aircrafts' %}</a></li>
+    </ul>
+  </div>
+  </div>
+</nav>

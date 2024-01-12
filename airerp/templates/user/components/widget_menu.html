@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load static %}
+
+<div class="card mb-4">
+    <div class="p-4">
+        <div class="card-header">
+            <h2 class="card-title">{% trans 'User menu' %}</h2>
+            <div class="card-subtitle">{% trans 'User navigations' %}</div>
+        </div>
+        <ul>
+            <li>
+                <a href="{% url 'user' %}" class="flex items-center menu-link">
+                    <span class="text-2xl mr-1"><i class="las la-user-circle"></i></span>
+                    {% trans 'User profile' %}
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'change-password' %}" class="flex items-center menu-link">
+                    <span class="text-2xl mr-1"><i class="las la-lock"></i></span>
+                    {% trans 'Change password' %}
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'user-tickets' %}" class="flex items-center menu-link">
+                    <span class="text-2xl mr-1"><i class="las la-ticket-alt"></i></span>
+                    {% trans 'Ticket history' %}
+                </a>
+            </li>
+            <li class="border-t border-gray-200 pt-4 mt-4">
+               <form method="post" action="{% url 'logout' %}" class="w-full">
+                    {% csrf_token %}
+                    <button type="submit" class="flex items-center menu-link">
+                        <span class="text-2xl mr-1"><i class="las la-sign-out-alt"></i></span>
+                        {% trans 'Sign out' %}
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>

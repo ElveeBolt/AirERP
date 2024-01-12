@@ -1,0 +1,20 @@
+{% extends 'user/layouts/grid2_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ aircraft.name }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+{% block content %}
+    <div class="card mb-4">
+        <img class="rounded-t-xl w-full" src="{{ aircraft.image.url }}" />
+        <div class="p-4">
+            <div class="mb-4 flex text-gray-400 space-x-5">
+                <div>{% trans 'Manufacturer:' %} {{ aircraft.manufacturer }}</div>
+                <div>{% trans 'Manufacturer year:' %} {{ aircraft.manufacturer_year }}</div>
+            </div>
+            <div>{{ aircraft.description }}</div>
+        </div>
+    </div>
+{% endblock content %}

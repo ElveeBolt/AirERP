@@ -1,0 +1,8 @@
+{% extends 'user/layouts/base.html' %}
+
+
+{% block layout %}
+    {% include "user/components/navbar.html" %}
+    {% block content %}{% endblock content %}
+    {% include "user/components/footer.html" %}
+{% endblock layout %}

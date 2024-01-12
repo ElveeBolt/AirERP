@@ -1,0 +1,124 @@
+{% extends 'manager/layouts/main_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+
+{% block content %}
+<div class="grid grid-cols-8 gap-4">
+    <div class="col-span-5">
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <div class="card mb-4">
+        <div class="p-4">
+            <div class="card-header">
+                <h2 class="card-title">{% trans 'Ticket info' %}</h2>
+                <div class="card-subtitle">{% trans 'Flight ticket form' %}</div>
+            </div>
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div>
+                    <label class="form-label" for="{{ form.gender.auto_id }}">{{ form.gender.label_tag }}</label>
+                    {{ form.gender }}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.first_name.auto_id }}">{{ form.first_name.label_tag }}</label>
+                    {{ form.first_name }}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.last_name.auto_id }}">{{ form.last_name.label_tag }}</label>
+                    {{ form.last_name }}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.date_birth.auto_id }}">{{ form.date_birth.label_tag }}</label>
+                    {{ form.date_birth }}
+                    <div class="text-sm text-gray-400 mt-2">{{ form.date_birth.help_text }}</div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div>
+                    <label class="form-label" for="{{ form.citizenship.auto_id }}">{{ form.citizenship.label_tag }}</label>
+                    {{ form.citizenship }}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.document_type.auto_id }}">{{ form.document_type.label_tag }}</label>
+                    {{ form.document_type }}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.document_serial.auto_id }}">{{ form.document_serial.label_tag }}</label>
+                    {{ form.document_serial }}
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.document_date_expiry.auto_id }}">{{ form.document_date_expiry.label_tag }}</label>
+                    {{ form.document_date_expiry }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="p-4">
+            <div>
+                <div class="card-header">
+                    <h2 class="card-title">{% trans 'Additional baggage' %}</h2>
+                    <div class="card-subtitle">{% trans 'Purchase the necessary amount of luggage now to avoid paying extra fees at the airport' %}</div>
+                </div>
+                <div>
+                    <label class="form-label" for="{{ form.baggage.auto_id }}">{{ form.baggage.label_tag }}</label>
+                    {{ form.baggage }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="p-4">
+            <div class="card-header">
+                <h2 class="card-title">{% trans 'Seat selection' %}</h2>
+                <div class="card-subtitle">{% trans 'Select the best option for you' %}</div>
+            </div>
+            <div>
+                <label class="form-label" for="{{ form.seat.auto_id }}">{{ form.seat.label_tag }}</label>
+                {{ form.seat }}
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="p-4">
+            <div class="card-header">
+                <h2 class="card-title">{% trans 'Additional services' %}</h2>
+                <div class="card-subtitle">{% trans 'Select service option for you' %}</div>
+            </div>
+            {% for forms in formset %}
+                <div class="flex justify-between items-center mb-4 space-x-4 text-gray-400">
+                    <div class="flex items-center flex-1 space-x-4">{{ forms.quantity.help_text }}</div>
+                    <div class="w-20">
+                        {{ forms.quantity }}
+                        {{ forms.service }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="p-4">
+            <div class="card-header">
+                <h2 class="card-title">{% trans 'Checkin' %}</h2>
+                <div class="card-subtitle">{% trans 'Select checkin status' %}</div>
+            </div>
+            <div>
+                <label class="form-label" for="{{ form.is_checkin.auto_id }}">{{ form.is_checkin.label_tag }}</label>
+                {{ form.is_checkin }}
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-end items-center space-x-4 mb-5">
+        <button class="btn btn-primary" type="submit"><i class="las la-save"></i>{% trans 'Save form' %}</button>
+    </div>
+</form>
+    </div>
+</div>
+{% endblock content %}
