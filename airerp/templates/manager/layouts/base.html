@@ -7,9 +7,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/line-awesome.css' %}">
-    <link rel="stylesheet" href="{% static 'css/inter.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{#    <link rel="stylesheet" href="{% static 'css/line-awesome.css' %}">#}
+{#    <link rel="stylesheet" href="{% static 'css/inter.css' %}">#}
+{#    <link rel="stylesheet" href="{% static 'css/styles.css' %}">#}
+    <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
     {% block styles %}{% endblock %}
 </head>
 
@@ -17,7 +18,8 @@
     {% block layout %}{% endblock %}
 </body>
 
-<script src="{% static 'js/flowbite.min.js' %}"></script>
-<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'dist/js/app.js' %}"></script>
+{#<script src="{% static 'js/flowbite.min.js' %}"></script>#}
+{#<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>#}
 {% block scripts %}{% endblock %}
 </html>
