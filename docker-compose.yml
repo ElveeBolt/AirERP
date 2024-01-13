@@ -17,6 +17,15 @@ services:
     depends_on:
       - postgres
 
+  worker-sender:
+    container_name: worker-sender
+    build:
+      context: ./airerp
+      dockerfile: ./airerp/Dockerfile
+    command: celery -A airerp.celery worker --pool=solo -l INFO
+    env_file:
+      - .env
+
   postgres:
     container_name: postgres3
     hostname: postgres

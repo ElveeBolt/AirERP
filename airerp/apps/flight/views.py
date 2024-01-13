@@ -7,7 +7,8 @@ from .models import Flight, FlightService
 from apps.airport.models import Airport
 from apps.ticket.models import Ticket
 from apps.ticket.forms import TicketForm, TicketServiceFormSet
-from apps.ticket.utils import send_ticket_email
+from apps.ticket.utils import generate_pdf
+from apps.user.tasks import send_email_task
 
 
 # Create your views here.
@@ -126,7 +127,19 @@ class ThanksView(TemplateView):
         ticket = self.get_ticket()
         context['ticket'] = ticket
 
-        send_ticket_email(user_email=ticket.user.email, ticket_id=ticket.id)
+        buffer = generate_pdf(ticket_id=ticket.id)
+
+        send_email_task.delay(
+            template='user/emails/ticket.html',
+            subject=_('Your ticket AirERP'),
+            user_email=ticket.user.email,
+            attach={
+                'filename': 'ticket.pdf',
+                'content': buffer,
+                'mimetype': 'application/pdf'
+            }
+        )
+
         return context
 
     def get_ticket(self):

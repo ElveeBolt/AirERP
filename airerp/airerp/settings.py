@@ -177,3 +177,7 @@ LOGOUT_URL = 'logout'
 # Mapbox settings
 MAP_TOKEN = os.environ.get("MAP_TOKEN", "pk.eyJ1Ijoic2FqZW1vcjU4MSIsImEiOiJjbGhoeDRlYWEwMmUyM3NsZXZ0azMzb3p0In0.d0mHDsFHCMgtd4iHKknGlg")
 MAP_STYLE = os.environ.get("MAP_STYLE", "mapbox://styles/mapbox/dark-v11")
+
+# Celery settings
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")

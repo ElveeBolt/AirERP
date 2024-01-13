@@ -12,7 +12,7 @@ from apps.ticket.models import Ticket
 from apps.ticket.utils import generate_pdf
 
 from .forms import LoginForm, SignUpForm, ChangePasswordForm
-from .utils import send_successful_signup_email
+from .tasks import send_email_task
 from .mixins import GateManagerMixin, CheckinManagerMixin, StaffMixin
 from .manager_forms import OnboardingForm, CheckinForm
 from ..flight.models import FlightService, Flight
@@ -43,7 +43,11 @@ class UserSignUpView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         user_email = form.cleaned_data.get('email')
-        send_successful_signup_email(user_email=user_email)
+        send_email_task.delay(
+            template='user/emails/successful_signup.html',
+            subject=_('Welcome to AirERP'),
+            user_email=user_email
+        )
         return response
 
 
