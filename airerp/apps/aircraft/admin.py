@@ -5,7 +5,7 @@ from .models import Aircraft, AircraftModel, Seat
 # Register your models here.
 class AircraftAdmin(admin.ModelAdmin):
     model = Aircraft
-    list_display = ('name', 'total_seats', 'first_class_seats', 'business_class_seats', 'economy_class_seats', 'model')
+    list_display = ('name', 'model', 'total_seats', 'window_seats', 'extra_legroom_seats', 'aisle_seats')
     list_filter = ('total_seats', )
 
 
