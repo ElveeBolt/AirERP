@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'apps.flight',
     'apps.ticket',
     'apps.service',
-    'apps.promocode',
 ]
 
 MIDDLEWARE = [

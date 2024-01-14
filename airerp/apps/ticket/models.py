@@ -32,7 +32,6 @@ class Ticket(models.Model):
     baggage = models.BooleanField(default=False, verbose_name=_('Additional baggage'))
     seat = models.ForeignKey(FlightSeat, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Seat'))
     # price = models.PositiveIntegerField(default=0, verbose_name=_('Price'))
-    # promo_code = models.ForeignKey(PromoCode, on_delete=models.CASCADE, verbose_name=_('Promo code'))
     is_checkin = models.BooleanField(default=False, verbose_name=_('Is checkin'))
     is_onboarding = models.BooleanField(default=False, verbose_name=_('Is onboarding'))
     date_booked = models.DateTimeField(auto_now_add=True, verbose_name=_('Date booked'))
