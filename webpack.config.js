@@ -5,7 +5,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
     mode: 'development',
     entry: {
-        app: path.resolve(__dirname, './airerp/static/js/index.js')
+        app: path.resolve(__dirname, './airerp/static/js/index_frontend.js'),
+        admin: path.resolve(__dirname, './airerp/static/js/index_backend.js')
     },
     output: {
         path: path.resolve(__dirname, "./airerp/static/dist"),

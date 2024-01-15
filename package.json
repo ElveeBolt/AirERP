@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "npx tailwindcss -i ./airerp/static/css/input.css -o ./airerp/static/css/styles.css --watch",
+    "build_frontend": "npx tailwindcss -i airerp/static/css/input_frontend.css -o airerp/static/css/styles_frontend.css --watch",
+    "build_backend": "npx tailwindcss -i ./airerp/static/css/input_backend.css -o ./airerp/static/css/styles_backend.css --watch",
     "build": "webpack --config webpack.config.js"
   },
   "devDependencies": {
