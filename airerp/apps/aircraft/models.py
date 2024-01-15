@@ -39,21 +39,8 @@ class Aircraft(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(Aircraft, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('aircrafts')
         verbose_name_plural = _('Aircraft')
-
-
-class Seat(models.Model):
-    name = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Name'))
-    description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
-    image = models.ImageField(upload_to='seat', null=True, blank=True, verbose_name=_('Image'))
-
-    def __str__(self):
-        return f"{self.name}"
-
-    class Meta:
-        verbose_name = _('seats')
-        verbose_name_plural = _('Seat')

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Aircraft, AircraftModel, Seat
+from .models import Aircraft, AircraftModel
 
 
 # Register your models here.
@@ -15,11 +15,5 @@ class AircraftModelAdmin(admin.ModelAdmin):
     list_filter = ('manufacturer', 'manufacturer_year')
 
 
-class SeatModelAdmin(admin.ModelAdmin):
-    model = Seat
-    list_display = ('name',)
-
-
 admin.site.register(Aircraft, AircraftAdmin)
 admin.site.register(AircraftModel, AircraftModelAdmin)
-admin.site.register(Seat, SeatModelAdmin)

@@ -1,11 +1,11 @@
 import random
 import string
-
-from django.db import models
-from apps.flight.models import Flight, FlightSeat, FlightService
-from apps.user.models import User
 from django.db.models import Sum
+from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from apps.flight.models import Flight, FlightService
+from apps.user.models import User
 
 
 # Create your models here.
@@ -18,6 +18,13 @@ class Ticket(models.Model):
     DOCUMENT_TYPE_CHOICES = (
         ('IP', 'International passport'),
     )
+
+    SEAT_TYPE_CHOICES = (
+        ('window', _('Window seat')),
+        ('extra_legroom', _('Extra legroom seat')),
+        ('aisle', _('Aisle seat')),
+    )
+
     code = models.CharField(null=True, max_length=6, unique=True, verbose_name=_('Ticket code'))
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE, verbose_name=_('Flight'))
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('User'))
@@ -30,8 +37,7 @@ class Ticket(models.Model):
     document_serial = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Document serial'))
     document_date_expiry = models.DateField(null=False, blank=False, verbose_name=_('Date document expiry'))
     baggage = models.BooleanField(default=False, verbose_name=_('Additional baggage'))
-    seat = models.ForeignKey(FlightSeat, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Seat'))
-    # price = models.PositiveIntegerField(default=0, verbose_name=_('Price'))
+    seat_type = models.CharField(null=True, blank=True, max_length=100, choices=SEAT_TYPE_CHOICES, verbose_name=_('Seat type'))
     is_checkin = models.BooleanField(default=False, verbose_name=_('Is checkin'))
     is_onboarding = models.BooleanField(default=False, verbose_name=_('Is onboarding'))
     date_booked = models.DateTimeField(auto_now_add=True, verbose_name=_('Date booked'))
@@ -44,14 +50,20 @@ class Ticket(models.Model):
         verbose_name_plural = _('Ticket')
 
     def calculate_total_price(self):
-        base_price = self.flight.base_price
-
-        baggage_price = 0
-        if self.baggage:
-            baggage_price = self.flight.baggage_price
-
+        baggage_price = self.flight.baggage_price if self.baggage else 0
         additional_services_price = self.ticketservice_set.aggregate(total=Sum('service__price'))['total'] or 0
-        total_price = base_price + baggage_price + additional_services_price
+
+        match self.seat_type:
+            case 'window':
+                seat_price = self.flight.window_seat_price
+            case 'extra_legroom':
+                seat_price = self.flight.extra_legroom_seat_price
+            case 'aisle':
+                seat_price = self.flight.aisle_seat_price
+            case _:
+                seat_price = 0
+
+        total_price = self.flight.base_price + baggage_price + seat_price + additional_services_price
 
         return total_price
 

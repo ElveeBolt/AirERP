@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.ticket.forms import Ticket
 
-from apps.flight.models import FlightSeat
 from apps.ticket.forms import BaggageRadioSelect, SeatRadioSelect
 
 
@@ -121,13 +120,13 @@ class CheckinForm(forms.ModelForm):
                     f'<div class="w-20"><img src="/static/images/baggage_icon_true.svg" class="mx-auto"></div><div class="flex-1"><div class="text-black font-semibold">Yes</div><div class="text-sm">{self.flight.baggage}</div></div><div class="price font-bold text-green-500 bg-gray-50 px-3 py-2 rounded-xl" data_price="{self.flight.baggage_price}">+{self.flight.baggage_price}$</div>')),
             ]
 
-            available_seats = FlightSeat.objects.filter(flight=self.flight)
-            seat_choices = [
-                (
-                    flight_seat.pk,
-                    mark_safe(
-                        f'<div class="w-20"><img src="{flight_seat.seat.image.url}" class="mx-auto"></div><div class="flex-1"><div class="text-black font-semibold">{flight_seat.seat.name}</div><div class="text-sm">{flight_seat.seat.description}</div></div><div class="font-bold text-green-500 bg-gray-50 px-3 py-2 rounded-xl">+{flight_seat.price}$</div>')
-                ) for flight_seat in available_seats
-            ]
-
-            self.fields['seat'].widget.choices = seat_choices
+            # available_seats = FlightSeat.objects.filter(flight=self.flight)
+            # seat_choices = [
+            #     (
+            #         flight_seat.pk,
+            #         mark_safe(
+            #             f'<div class="w-20"><img src="{flight_seat.seat.image.url}" class="mx-auto"></div><div class="flex-1"><div class="text-black font-semibold">{flight_seat.seat.name}</div><div class="text-sm">{flight_seat.seat.description}</div></div><div class="font-bold text-green-500 bg-gray-50 px-3 py-2 rounded-xl">+{flight_seat.price}$</div>')
+            #     ) for flight_seat in available_seats
+            # ]
+            #
+            # self.fields['seat'].widget.choices = seat_choices

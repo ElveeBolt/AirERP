@@ -1,3 +1,4 @@
+from django.db.models import ExpressionWrapper, F, DurationField
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.translation import gettext_lazy as _
@@ -21,11 +22,6 @@ class FlightListView(ListView):
         'subtitle': _('Compare prices. Book the best tickets. Enjoy your journey.')
     }
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['search_filter'] = self.get_search_filters()
-        return context
-
     def get_search_filters(self):
         departure_from = Airport.objects.get(id=self.request.GET.get('departure_from'))
         arrival_to = Airport.objects.get(id=self.request.GET.get('arrival_to'))
@@ -42,6 +38,11 @@ class FlightListView(ListView):
             departure_from=filters.get('departure_from'),
             arrival_to=filters.get('arrival_to'),
             departure_time__gte=filters.get('departure_time')
+        ).annotate(
+            duration=ExpressionWrapper(
+                F('arrival_time') - F('departure_time'),
+                output_field=DurationField()
+            )
         )
         return queryset
 
@@ -60,6 +61,7 @@ class FlightDetailView(DetailView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['formset'] = self.get_formset()
+        context['free_seats'] = self.object.get_free_seats()
         return context
 
     def get_formset(self):

@@ -1,12 +1,12 @@
 from datetime import date, timedelta
 
 from django import forms
-from django.forms import inlineformset_factory, formset_factory, modelformset_factory
+from django.forms import inlineformset_factory
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from .models import Ticket, TicketService
-from apps.flight.models import Flight, FlightService, FlightSeat
+from apps.flight.models import Flight, FlightService
 
 
 class BaggageRadioSelect(forms.RadioSelect):
@@ -81,7 +81,12 @@ class TicketForm(forms.ModelForm):
                 }
             ),
             'baggage': BaggageRadioSelect(),
-            'seat': SeatRadioSelect()
+            'seat_type': forms.Select(
+                attrs={
+                    'placeholder': _('Seat type...'),
+                    'class': 'form-control'
+                },
+            ),
         }
 
         help_texts = {
@@ -92,7 +97,7 @@ class TicketForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.flight = flight
 
-        if flight:
+        if self.flight:
             self.fields['baggage'].widget.choices = [
                 (False, mark_safe(
                     f'<div class="w-20"><img src="/static/images/baggage_icon_false.svg" class="mx-auto"></div><div class="flex-1"><div class="text-black font-semibold">No</div><div class="text-sm">Without additional baggage</div></div>')),
@@ -100,16 +105,8 @@ class TicketForm(forms.ModelForm):
                     f'<div class="w-20"><img src="/static/images/baggage_icon_true.svg" class="mx-auto"></div><div class="flex-1"><div class="text-black font-semibold">Yes</div><div class="text-sm">{self.flight.baggage}</div></div><div class="price font-bold text-green-500 bg-gray-50 px-3 py-2 rounded-xl" data_price="{self.flight.baggage_price}">+{self.flight.baggage_price}$</div>')),
             ]
 
-            available_seats = FlightSeat.objects.filter(flight=self.flight)
-            seat_choices = [
-                (
-                    flight_seat.pk,
-                    mark_safe(
-                        f'<div class="w-20"><img src="{flight_seat.seat.image.url}" class="mx-auto"></div><div class="flex-1"><div class="text-black font-semibold">{flight_seat.seat.name}</div><div class="text-sm">{flight_seat.seat.description}</div></div><div class="font-bold text-green-500 bg-gray-50 px-3 py-2 rounded-xl">+{flight_seat.price}$</div>')
-                ) for flight_seat in available_seats
-            ]
-
-            self.fields['seat'].widget.choices = seat_choices
+            available_seat_types = flight.get_available_seat_types()
+            self.fields['seat_type'].choices = [(key, value) for key, value in available_seat_types.items()]
 
 
 class TicketServiceForm(forms.ModelForm):

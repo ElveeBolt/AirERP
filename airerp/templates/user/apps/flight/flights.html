@@ -24,6 +24,7 @@
                         <div class="flex-1 relative">
                             <span class="w-2 h-2 block absolute bg-blue-500 -mt-1 rounded-full"></span>
                             <div class="block border-t border-dashed border-blue-500 w-full"></div>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -mt-4 text-sm">{{ flight.duration }}</div>
                             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 text-sm text-gray-400 dark:text-gray-400">{{ flight.aircraft.name }}</div>
                             <span class="w-2 h-2 block absolute bg-blue-500 -mt-1 rounded-full right-0"></span>
                         </div>
@@ -44,6 +45,9 @@
                     </div>
                 </div>
                 <div class="border-l border-gray-200 dark:border-gray-700 pl-4 text-center flex flex-col">
+                    <div class="bg-gray-50 text-gray-400 text-xs font-medium me-2 px-2.5 py-1 rounded dark:bg-gray-700 dark:text-gray-300 mb-3">
+                        {{ flight.get_seat_class_display }}
+                    </div>
                     <div class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Base ticket price' %}</div>
                     <div class="font-bold mb-4 text-blue-500 text-2xl">{{ flight.base_price }} $</div>
                     <div class="mt-auto">
@@ -58,26 +62,3 @@
     </div>
     {% endfor %}
 {% endblock content %}
-
-{% block sideright %}
-<div class="card mb-4">
-    <div class="p-4">
-        <div class="card-header">
-            <h2 class="card-title">{% trans 'Flight detail' %}</h2>
-            <div class="card-subtitle">{% trans 'Your flight details' %}</div>
-        </div>
-        <div class="mb-4">
-            <span class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Departure from' %}</span>
-            <div>{{ search_filter.departure_from }}</div>
-        </div>
-        <div class="mb-4">
-            <span class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Arrival to' %}</span>
-            <div>{{ search_filter.arrival_to }}</div>
-        </div>
-        <div>
-            <span class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Departure time' %}</span>
-            <div>{{ search_filter.departure_time }}</div>
-        </div>
-    </div>
-</div>
-{% endblock sideright %}
