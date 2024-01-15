@@ -5,8 +5,9 @@
     <div>
         <div class="font-semibold mb-3">{% trans 'Main menu' %}</div>
         <ul>
-{#            <li><a href="{% url 'manager' %}" class="sidebar-link"><i class="las la-home"></i>{% trans 'Home page' %}</a></li>#}
-{#            <li><a href="{% url 'manager-tickets' %}" class="sidebar-link"><i class="las la-ticket-alt"></i>{% trans 'Check tickets' %}</a></li>#}
+            {% for link in manager_menu %}
+                <li><a href="{% url link.link %}" class="sidebar-link"><i class="{{ link.icon }}"></i>{{ link.title }}</a></li>
+            {% endfor %}
         </ul>
     </div>
     <div class="mt-auto">

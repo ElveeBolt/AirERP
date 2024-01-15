@@ -14,3 +14,16 @@ class AircraftManagerForm(forms.ModelForm):
             'extra_legroom_seats': forms.NumberInput(attrs={'class': 'form-control'}),
             'aisle_seats': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+
+class AircraftModelManagerForm(forms.ModelForm):
+    class Meta:
+        model = AircraftModel
+        fields = ['name', 'description', 'manufacturer', 'manufacturer_year', 'image']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'manufacturer': forms.TextInput(attrs={'class': 'form-control'}),
+            'manufacturer_year': forms.NumberInput(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }

@@ -18,3 +18,11 @@ class IndexView(TemplateView):
         context['form'] = FlightSearchForm()
         context['aircrafts'] = AircraftModel.objects.all()[:3]
         return context
+
+
+class IndexManagerView(TemplateView):
+    template_name = 'manager/apps/page/index.html'
+    extra_context = {
+        'title': _('AirERP'),
+        'subtitle': _('Compare prices. Book the best tickets. Enjoy your journey.')
+    }

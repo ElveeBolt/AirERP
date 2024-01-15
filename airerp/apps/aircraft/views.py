@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, UpdateView, DeleteView, C
 from django.utils.translation import gettext_lazy as _
 
 from .models import AircraftModel, Aircraft
-from .forms import AircraftManagerForm
+from .forms import AircraftManagerForm, AircraftModelManagerForm
 
 
 # Create your views here.
@@ -69,4 +69,47 @@ class AircraftManagerCreateView(SuccessMessageMixin, CreateView):
     extra_context = {
         'title': _('Create aircraft'),
         'subtitle': _('Detail information about aircraft')
+    }
+
+
+class AircraftModelManagerListView(ListView):
+    model = AircraftModel
+    template_name = 'manager/apps/aircraft/aircraft-models.html'
+    context_object_name = 'aircrafts'
+    extra_context = {
+        'title': _('Aircraft models'),
+        'subtitle': _('List of all AirERP aircraft models')
+    }
+
+
+class AircraftModelManagerUpdateView(SuccessMessageMixin, UpdateView):
+    model = AircraftModel
+    form_class = AircraftModelManagerForm
+    template_name = 'manager/apps/aircraft/aircraft-model.html'
+    context_object_name = 'aircraft'
+    success_message = _('Update object is successful')
+    success_url = reverse_lazy('manager-aircraft-models')
+    extra_context = {
+        'title': _('Aircraft model'),
+        'subtitle': _('Detail information about aircraft model')
+    }
+
+
+class AircraftModelManagerDeleteView(SuccessMessageMixin, DeleteView):
+    model = AircraftModel
+    template_name = 'manager/apps/aircraft/aircraft-model.html'
+    context_object_name = 'aircraft'
+    success_url = reverse_lazy('manager-aircraft-models')
+    success_message = _('Delete object is successful')
+
+
+class AircraftModelManagerCreateView(SuccessMessageMixin, CreateView):
+    model = AircraftModel
+    form_class = AircraftModelManagerForm
+    template_name = 'manager/apps/aircraft/aircraft-model.html'
+    success_url = reverse_lazy('manager-aircraft-models')
+    success_message = _('Create object is successful')
+    extra_context = {
+        'title': _('Create aircraft model'),
+        'subtitle': _('Detail information about aircraft model')
     }
