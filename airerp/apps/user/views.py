@@ -108,7 +108,7 @@ class UserTicketPDFView(View):
 
 
 class ManagerView(StaffMixin, TemplateView):
-    template_name = 'manager/index.html'
+    template_name = 'manager/apps/page/index.html'
     extra_context = {
         'title': _('Index page'),
         'subtitle': _('Detail information about tickets')

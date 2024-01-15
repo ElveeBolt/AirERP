@@ -29,11 +29,6 @@
               <li>
                 <a href="{% url 'change-password' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'Change password' %}</a>
               </li>
-                {% if user.is_staff %}
-                  <li>
-                    <a href="{% url 'manager' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'Manager' %}</a>
-                  </li>
-                {% endif %}
             </ul>
             <div class="py-2">
                 <form method="post" action="{% url 'logout' %}" class="w-full">

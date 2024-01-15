@@ -24,7 +24,7 @@ urlpatterns = [
     path('flights/', include('apps.flight.urls')),
     path('aircrafts/', include('apps.aircraft.urls')),
     path('user/', include('apps.user.urls')),
-    path('manager/', include('apps.user.manager_urls')),
+    path('manager/', include('airerp.urls_manager')),
     path('admin/', admin.site.urls),
 ]
 

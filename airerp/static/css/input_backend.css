@@ -17,6 +17,10 @@
     @apply border border-gray-200 dark:border-gray-700 bg-white hover:bg-blue-600  hover:text-white
 }
 
+.btn-danger{
+    @apply text-white bg-red-500 hover:bg-red-600
+}
+
 .btn i {
     @apply text-xl leading-none me-1
 }
@@ -46,7 +50,7 @@
 }
 
 .card-header {
-    @apply mb-4 pb-4 border-b border-gray-200 dark:border-gray-700
+    @apply mb-4 pb-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between
 }
 
 .card-title {
