@@ -5,4 +5,5 @@ urlpatterns = [
     path('', include('apps.page.urls_manager')),
     path('aircrafts/', include('apps.aircraft.urls_manager')),
     path('airports/', include('apps.airport.urls_manager')),
+    path('services/', include('apps.service.urls_manager')),
 ]

@@ -29,6 +29,16 @@ def manager_menu(request):
                 'title': _('Airport cities'),
                 'link': 'manager-airport-cities',
                 'icon': 'las la-map'
+            },
+            {
+                'title': _('Company services'),
+                'link': 'manager-services',
+                'icon': 'las la-hamburger'
+            },
+            {
+                'title': _('Company baggages'),
+                'link': 'manager-service-baggages',
+                'icon': 'las la-suitcase-rolling'
             }
         ]
 
