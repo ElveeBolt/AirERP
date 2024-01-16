@@ -41,8 +41,20 @@
                         <td class="px-2 py-4">{{ ticket.flight }}</td>
                         <td class="px-2 py-4">{{ ticket.first_name }} {{ ticket.last_name }}</td>
                         <td class="px-2 py-4">{{ ticket.seat_type }}</td>
-                        <td class="px-2 py-4">{{ ticket.is_checkin }}</td>
-                        <td class="px-2 py-4">{{ ticket.is_onboarding }}</td>
+                        <td class="px-2 py-4">
+                            {% if ticket.is_checkin %}
+                                <span class="bg-green-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-green-400">{{ ticket.is_checkin }}</span>
+                            {% else %}
+                                <span class="bg-red-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-red-400">{{ ticket.is_checkin }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-2 py-4">
+                            {% if ticket.is_onboarding %}
+                                <span class="bg-green-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-green-400">{{ ticket.is_onboarding }}</span>
+                            {% else %}
+                                <span class="bg-red-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-red-400">{{ ticket.is_onboarding }}</span>
+                            {% endif %}
+                        </td>
                         <td class="px-2 py-4">{{ ticket.date_booked }}</td>
                         <td class="pl-2 pr-4 py-4 text-right">
                             <div class="flex space-x-3">
