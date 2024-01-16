@@ -6,4 +6,5 @@ urlpatterns = [
     path('aircrafts/', include('apps.aircraft.urls_manager')),
     path('airports/', include('apps.airport.urls_manager')),
     path('services/', include('apps.service.urls_manager')),
+    path('flights/', include('apps.flight.urls_manager')),
 ]

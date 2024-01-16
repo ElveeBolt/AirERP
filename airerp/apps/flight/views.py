@@ -1,9 +1,11 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ExpressionWrapper, F, DurationField
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.translation import gettext_lazy as _
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, CreateView, DeleteView, UpdateView
 
+from .forms import FlightManagerForm, FlightServiceManagerForm
 from .models import Flight, FlightService
 from apps.airport.models import Airport
 from apps.ticket.models import Ticket
@@ -148,3 +150,85 @@ class ThanksView(TemplateView):
         ticket_id = self.request.session.get('ticket')
         ticket = Ticket.objects.get(id=ticket_id)
         return ticket
+
+
+class FlightManagerListView(ListView):
+    model = Flight
+    template_name = 'manager/apps/flight/flights.html'
+    context_object_name = 'flights'
+    extra_context = {
+        'title': _('Flights'),
+        'subtitle': _('List of all AirERP flights')
+    }
+
+
+class FlightManagerUpdateView(SuccessMessageMixin, UpdateView):
+    model = Flight
+    form_class = FlightManagerForm
+    template_name = 'manager/apps/flight/flight.html'
+    context_object_name = 'flight'
+    success_message = _('Update object is successful')
+    success_url = reverse_lazy('manager-flights')
+    extra_context = {
+        'title': _('Flight'),
+        'subtitle': _('Detail information about flight')
+    }
+
+
+class FlightManagerDeleteView(SuccessMessageMixin, DeleteView):
+    model = Flight
+    success_url = reverse_lazy('manager-flights')
+    success_message = _('Delete object is successful')
+
+
+class FlightManagerCreateView(SuccessMessageMixin, CreateView):
+    model = Flight
+    form_class = FlightManagerForm
+    template_name = 'manager/apps/flight/flight.html'
+    success_url = reverse_lazy('manager-flights')
+    success_message = _('Create object is successful')
+    extra_context = {
+        'title': _('Create flight'),
+        'subtitle': _('Detail information about flight')
+    }
+
+
+class FlightServiceManagerListView(ListView):
+    model = FlightService
+    template_name = 'manager/apps/flight/services.html'
+    context_object_name = 'services'
+    extra_context = {
+        'title': _('Flight Services'),
+        'subtitle': _('List of all AirERP flight services')
+    }
+
+
+class FlightServiceManagerUpdateView(SuccessMessageMixin, UpdateView):
+    model = FlightService
+    form_class = FlightServiceManagerForm
+    template_name = 'manager/apps/flight/service.html'
+    context_object_name = 'flight'
+    success_message = _('Update object is successful')
+    success_url = reverse_lazy('manager-flight-services')
+    extra_context = {
+        'title': _('Flight service'),
+        'subtitle': _('Detail information about flight service')
+    }
+
+
+class FlightServiceManagerDeleteView(SuccessMessageMixin, DeleteView):
+    model = FlightService
+    success_url = reverse_lazy('manager-flight-services')
+    success_message = _('Delete object is successful')
+
+
+class FlightServiceManagerCreateView(SuccessMessageMixin, CreateView):
+    model = FlightService
+    form_class = FlightServiceManagerForm
+    template_name = 'manager/apps/flight/service.html'
+    success_url = reverse_lazy('manager-flight-services')
+    success_message = _('Create object is successful')
+    extra_context = {
+        'title': _('Create flight service'),
+        'subtitle': _('Detail information about flight service')
+    }

@@ -39,6 +39,16 @@ def manager_menu(request):
                 'title': _('Company baggages'),
                 'link': 'manager-service-baggages',
                 'icon': 'las la-suitcase-rolling'
+            },
+            {
+                'title': _('Flights'),
+                'link': 'manager-flights',
+                'icon': 'las la-plane-departure'
+            },
+            {
+                'title': _('Flight services'),
+                'link': 'manager-flight-services',
+                'icon': 'las la-cart-plus'
             }
         ]
 
