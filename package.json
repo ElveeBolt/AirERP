@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "css-loader": "^6.8.1",
+    "datatables.net": "^1.13.8",
     "expose-loader": "^4.1.0",
     "flowbite": "^2.2.1",
     "jquery": "^3.7.1",

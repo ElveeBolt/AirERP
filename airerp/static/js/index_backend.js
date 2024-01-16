@@ -1,5 +1,5 @@
-import $ from "jquery";
-const flowbite = require('./flowbite.min')
-const dataTables = require('./jquery.dataTables.min')
+import 'datatables.net';
+import './flowbite.min';
+import './common_backend';
 
 import "../css/index_backend.css";
