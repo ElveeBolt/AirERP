@@ -6,7 +6,6 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from .models import Ticket, TicketService
-from apps.flight.models import Flight, FlightService
 
 
 class BaggageRadioSelect(forms.RadioSelect):
@@ -137,11 +136,10 @@ TicketServiceFormSet = inlineformset_factory(Ticket, TicketService, form=TicketS
 class TicketManagerForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['code', 'flight', 'user', 'gender', 'first_name', 'last_name', 'date_birth', 'citizenship', 'document_type', 'document_serial', 'document_date_expiry', 'baggage', 'seat_type', 'is_checkin', 'is_onboarding']
+        exclude = ['user', 'is_checkin', 'is_onboarding']
         widgets = {
             'code': forms.TextInput(attrs={'class': 'form-control'}),
             'flight': forms.Select(attrs={'class': 'form-control'}),
-            'user': forms.Select(attrs={'class': 'form-control'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -152,6 +150,17 @@ class TicketManagerForm(forms.ModelForm):
             'document_date_expiry': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'baggage': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'seat_type': forms.Select(attrs={'class': 'form-control'}),
-            'is_checkin': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'is_onboarding': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+
+class TicketServiceManagerForm(forms.ModelForm):
+    class Meta:
+        model = TicketService
+        fields = ('quantity', 'service')
+
+    def __init__(self, services=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.services = services
+
+        choices = [(service.id, service) for service in self.services]
+        self.fields['service'].widget = forms.Select(choices=choices)
