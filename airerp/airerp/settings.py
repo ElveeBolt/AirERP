@@ -26,12 +26,14 @@ SECRET_KEY = 'django-insecure-@=v0udi!h-g%f(pt^6z^(*6s4c+le44%w^*mgi%psm=r)wmn*#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,6 +83,7 @@ FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 
 WSGI_APPLICATION = 'airerp.wsgi.application'
+ASGI_APPLICATION = "airerp.asgi.application"
 
 AUTH_USER_MODEL = "user.User"
 
@@ -99,6 +102,12 @@ DATABASES = {
         'HOST': os.environ.get('SQL_HOST'),
         'PORT': os.environ.get('SQL_PORT'),
     }
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
 }
 
 # Password validation
