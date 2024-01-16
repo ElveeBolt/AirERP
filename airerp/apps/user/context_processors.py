@@ -11,6 +11,11 @@ def manager_menu(request):
                 'icon': 'las la-home'
             },
             {
+                'title': _('Tickets'),
+                'link': 'manager-tickets',
+                'icon': 'las la-ticket-alt'
+            },
+            {
                 'title': _('Aircrafts'),
                 'link': 'manager-aircrafts',
                 'icon': 'las la-fighter-jet'

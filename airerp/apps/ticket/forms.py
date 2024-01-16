@@ -132,3 +132,26 @@ class TicketServiceForm(forms.ModelForm):
 
 
 TicketServiceFormSet = inlineformset_factory(Ticket, TicketService, form=TicketServiceForm, extra=0)
+
+
+class TicketManagerForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['code', 'flight', 'user', 'gender', 'first_name', 'last_name', 'date_birth', 'citizenship', 'document_type', 'document_serial', 'document_date_expiry', 'baggage', 'seat_type', 'is_checkin', 'is_onboarding']
+        widgets = {
+            'code': forms.TextInput(attrs={'class': 'form-control'}),
+            'flight': forms.Select(attrs={'class': 'form-control'}),
+            'user': forms.Select(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'citizenship': forms.TextInput(attrs={'class': 'form-control'}),
+            'document_type': forms.Select(attrs={'class': 'form-control'}),
+            'document_serial': forms.TextInput(attrs={'class': 'form-control'}),
+            'document_date_expiry': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'baggage': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'seat_type': forms.Select(attrs={'class': 'form-control'}),
+            'is_checkin': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_onboarding': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

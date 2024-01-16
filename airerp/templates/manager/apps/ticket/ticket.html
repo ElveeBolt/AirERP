@@ -14,107 +14,85 @@
         <div class="card mb-4">
             <div class="p-4">
                 <div class="card-header">
-                    <h2 class="card-title">{{ ticket.flight.departure_from }} -> {{ ticket.flight.arrival_to }}</h2>
-                    <div class="card-subtitle">{% trans 'Detail information about ticket in AirERP' %}</div>
-                </div>
-                <div class="mb-5 flex">
-                    {% if ticket.is_onboarding %}
-                        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400">{% trans 'On Boarding' %}</span>
-                    {% else %}
-                        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400">{% trans 'Not on boarding' %}</span>
-                    {% endif %}
-                    {% if ticket.is_checkin %}
-                        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400">{% trans 'Is checkin' %}</span>
-                    {% else %}
-                        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400">{% trans 'Is not checkin' %}</span>
-                    {% endif %}
-                </div>
-                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <div class="mb-5">
-                            <div class="font-semibold mb-3">{% trans 'Passenger info' %}</div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Name:' %}</div><div>{{ ticket.first_name }} {{ ticket.last_name }}</div>
-                            </div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Gender:' %}</div><div>{{ ticket.gender }}</div>
-                            </div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Date birth:' %}</div><div>{{ ticket.date_birth }}</div>
-                            </div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Citizenship:' %}</div><div>{{ ticket.citizenship }}</div>
-                            </div>
-                        </div>
-                        <div class="mb-5">
-                            <div class="font-semibold mb-3">{% trans 'Document info' %}</div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Document type:' %}</div><div>{{ ticket.document_type }}</div>
-                            </div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Document serial:' %}</div><div>{{ ticket.document_serial }}</div>
-                            </div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Document date expiry:' %}</div><div>{{ ticket.document_date_expiry }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="mb-5">
-                            <div class="font-semibold mb-3">{% trans 'Baggage info' %}</div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Baggage:' %}</div><div>{{ ticket.baggage }}</div>
-                            </div>
-                        </div>
-                        <div class="mb-5">
-                            <div class="font-semibold mb-3">{% trans 'Seat info' %}</div>
-                            <div class="flex space-x-3 mb-2">
-                                <div class="text-gray-400">{% trans 'Seat:' %}</div><div>{{ ticket.seat }}</div>
-                            </div>
-                        </div>
-                        <div class="mb-5">
-                            <div class="font-semibold mb-3">{% trans 'Service info' %}</div>
-                            {% for service in ticket.ticketservice_set.all %}
-                            <div class="flex space-x-3 mb-2">
-                                <div>{{ service.service }}</div><div class="text-green-500">{{ service.service.price }}$</div><div>x{{ service.quantity }}</div>
-                            </div>
-                            {% endfor %}
-                        </div>
+                        <h2 class="card-title">{% trans 'View ticket' %}</h2>
+                        <div class="card-subtitle">{% trans 'Detail information about ticket in AirERP' %}</div>
                     </div>
                 </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.code.auto_id }}">{{ form.code.label_tag }}</label>
+                        {{ form.code }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.flight.auto_id }}">{{ form.flight.label_tag }}</label>
+                        {{ form.flight }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.user.auto_id }}">{{ form.user.label_tag }}</label>
+                        {{ form.user }}
+                    </div>
+                    <div class="grid gap-4 grid-cols-4 mb-3">
+                        <div>
+                            <label class="form-label" for="{{ form.gender.auto_id }}">{{ form.gender.label_tag }}</label>
+                            {{ form.gender }}
+                        </div>
+                        <div>
+                            <label class="form-label" for="{{ form.first_name.auto_id }}">{{ form.first_name.label_tag }}</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div>
+                            <label class="form-label" for="{{ form.last_name.auto_id }}">{{ form.last_name.label_tag }}</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div>
+                            <label class="form-label" for="{{ form.date_birth.auto_id }}">{{ form.date_birth.label_tag }}</label>
+                            {{ form.date_birth }}
+                        </div>
+                    </div>
+                    <div class="grid gap-4 grid-cols-4 mb-3">
+                        <div>
+                            <label class="form-label" for="{{ form.citizenship.auto_id }}">{{ form.citizenship.label_tag }}</label>
+                            {{ form.citizenship }}
+                        </div>
+                        <div>
+                            <label class="form-label" for="{{ form.document_type.auto_id }}">{{ form.document_type.label_tag }}</label>
+                            {{ form.document_type }}
+                        </div>
+                        <div>
+                            <label class="form-label" for="{{ form.document_serial.auto_id }}">{{ form.document_serial.label_tag }}</label>
+                            {{ form.document_serial }}
+                        </div>
+                        <div>
+                            <label class="form-label" for="{{ form.document_date_expiry.auto_id }}">{{ form.document_date_expiry.label_tag }}</label>
+                            {{ form.document_date_expiry }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.baggage.auto_id }}">{{ form.baggage.label_tag }}</label>
+                        {{ form.baggage }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.seat_type.auto_id }}">{{ form.seat_type.label_tag }}</label>
+                        {{ form.seat_type }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.is_checkin.auto_id }}">{{ form.is_checkin.label_tag }}</label>
+                        {{ form.is_checkin }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.is_onboarding.auto_id }}">{{ form.is_onboarding.label_tag }}</label>
+                        {{ form.is_onboarding }}
+                    </div>
+                    {% if form.errors %}
+                        <div class="text-red-500 text-sm mb-4">{{ form.errors }}</div>
+                    {% endif %}
+                    <div>
+                        <button class="btn btn-primary" type="submit"><i class="las la-save"></i>{% trans 'Save object' %}</button>
+                    </div>
+                </form>
             </div>
-        </div>
-    </div>
-    <div class="col-span-3">
-        <div class="card mb-4">
-            <div class="p-4">
-                <div class="card-header">
-                    <h2 class="card-title">{% trans 'Flight detail' %}</h2>
-                    <div class="card-subtitle">{% trans 'Detail information about flight' %}</div>
-                </div>
-                <div class="flex space-x-3 mb-2">
-                    <div class="text-gray-400">{% trans 'From (city):' %}</div><div>{{ ticket.flight.departure_from.city }}</div>
-                </div>
-                <div class="flex space-x-3 mb-2">
-                    <div class="text-gray-400">{% trans 'From (date):' %}</div><div>{{ ticket.flight.departure_time }}</div>
-                </div>
-                <div class="flex space-x-3 mb-2">
-                    <div class="text-gray-400">{% trans 'To (city):' %}</div><div>{{ ticket.flight.arrival_to.city }}</div>
-                </div>
-                <div class="flex space-x-3 mb-2">
-                    <div class="text-gray-400">{% trans 'To (date):' %}</div><div>{{ ticket.flight.arrival_time }}</div>
-                </div>
-            </div>
-        </div>
-        <div class="flex space-x-4">
-            <a href="{% url 'manager-ticket-onboarding' pk=ticket.pk %}" class="btn btn-primary">
-                <i class="las la-dungeon"></i>
-                {% trans 'Edit onboarding' %}
-            </a>
-            <a href="{% url 'manager-ticket-checkin' pk=ticket.pk %}" class="btn btn-primary">
-                <i class="las la-clipboard-check"></i>
-                {% trans 'Edit checkin' %}
-            </a>
         </div>
     </div>
 </div>
