@@ -8,4 +8,5 @@ urlpatterns = [
     path('airports/', include('apps.airport.urls_manager')),
     path('services/', include('apps.service.urls_manager')),
     path('flights/', include('apps.flight.urls_manager')),
+    path('users/', include('apps.user.urls_manager')),
 ]

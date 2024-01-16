@@ -14,6 +14,34 @@ def manager_menu(request):
                 'title': _('Tickets'),
                 'link': 'manager-tickets',
                 'icon': 'las la-ticket-alt'
+            }
+        ]
+
+    if request.user.groups.filter(name='Checkin managers').exists():
+        links = [
+            {
+                'title': _('Home page'),
+                'link': 'manager',
+                'icon': 'las la-home'
+            },
+            {
+                'title': _('Tickets'),
+                'link': 'manager-tickets',
+                'icon': 'las la-ticket-alt'
+            }
+        ]
+
+    if request.user.groups.filter(name='Supervisor').exists():
+        links = [
+            {
+                'title': _('Home page'),
+                'link': 'manager',
+                'icon': 'las la-home'
+            },
+            {
+                'title': _('Tickets'),
+                'link': 'manager-tickets',
+                'icon': 'las la-ticket-alt'
             },
             {
                 'title': _('Aircrafts'),
@@ -54,6 +82,11 @@ def manager_menu(request):
                 'title': _('Flight services'),
                 'link': 'manager-flight-services',
                 'icon': 'las la-cart-plus'
+            },
+            {
+                'title': _('Users'),
+                'link': 'manager-users',
+                'icon': 'las la-users'
             }
         ]
 

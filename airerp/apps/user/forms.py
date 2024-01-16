@@ -1,7 +1,10 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
+from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
+
+from .models import User
 
 
 class LoginForm(AuthenticationForm):
@@ -112,6 +115,29 @@ class ChangePasswordForm(PasswordChangeForm):
         widget=forms.PasswordInput(
             attrs={
                 'placeholder': _('Enter password...'),
+                'class': 'form-control'
+            }
+        )
+    )
+
+
+class UserGroupAssignmentForm(forms.Form):
+    user = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        label=_('Select user'),
+        widget=forms.Select(
+            attrs={
+                'placeholder': _('Select user...'),
+                'class': 'form-control'
+            }
+        )
+    )
+    group = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        label=_('Select group'),
+        widget=forms.Select(
+            attrs={
+                'placeholder': _('Select group...'),
                 'class': 'form-control'
             }
         )

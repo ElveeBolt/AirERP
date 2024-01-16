@@ -6,17 +6,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView, PasswordChangeView
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, TemplateView, ListView, DetailView, UpdateView
+from django.views.generic import CreateView, TemplateView, ListView, DetailView, UpdateView, DeleteView, FormView
 
 from apps.ticket.models import Ticket
 from apps.ticket.utils import generate_pdf
 
-from .forms import LoginForm, SignUpForm, ChangePasswordForm
+from .forms import LoginForm, SignUpForm, ChangePasswordForm, UserGroupAssignmentForm
 from .tasks import send_email_task
-from .mixins import GateManagerMixin, CheckinManagerMixin, StaffMixin
-from .manager_forms import OnboardingForm, CheckinForm
-from ..flight.models import FlightService, Flight
-from ..ticket.forms import TicketServiceFormSet
+from .models import User
+
 
 
 # Create your views here.
@@ -105,3 +103,49 @@ class UserTicketPDFView(View):
         response = HttpResponse(buffer.getvalue(), content_type='application/pdf')
         response['Content-Disposition'] = f'inline; filename="ticket_{ticket_id}.pdf"'
         return response
+
+
+class UserManagerListView(ListView):
+    model = User
+    template_name = 'manager/apps/user/users.html'
+    context_object_name = 'users'
+    extra_context = {
+        'title': _('Users'),
+        'subtitle': _('List of all AirERP users')
+    }
+
+    def get_queryset(self):
+        queryset = User.objects.filter()
+        return queryset
+
+
+class UserManagerUpdateView(FormView):
+    template_name = 'manager/apps/user/user.html'
+    form_class = UserGroupAssignmentForm
+    success_url = reverse_lazy('manager-users')
+    extra_context = {
+        'title': _('User Assign'),
+        'subtitle': _('Detail information about user assign')
+    }
+
+    def get_initial(self):
+        initial = super().get_initial()
+        user = User.objects.get(pk=self.kwargs.get('pk'))
+        initial['user'] = user
+
+        user_groups = user.groups.all()
+        if user_groups:
+            initial['group'] = user_groups[0]
+        return initial
+
+    def form_valid(self, form):
+        user = form.cleaned_data['user']
+        group = form.cleaned_data['group']
+        user.groups.set([group])
+        return super().form_valid(form)
+
+
+class UserManagerDeleteView(SuccessMessageMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy('manager-users')
+    success_message = _('Delete object is successful')
