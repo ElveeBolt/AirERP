@@ -2,6 +2,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from django.utils.translation import gettext_lazy as _
+from apps.user.mixins import SupervisorManagerMixin
 
 from .models import AircraftModel, Aircraft
 from .forms import AircraftManagerForm, AircraftModelManagerForm
@@ -29,7 +30,7 @@ class AircraftDetailView(DetailView):
 
 
 # Views for managers.
-class AircraftManagerListView(ListView):
+class AircraftManagerListView(SupervisorManagerMixin, ListView):
     model = Aircraft
     template_name = 'manager/apps/aircraft/aircrafts.html'
     context_object_name = 'aircrafts'
@@ -39,7 +40,7 @@ class AircraftManagerListView(ListView):
     }
 
 
-class AircraftManagerUpdateView(SuccessMessageMixin, UpdateView):
+class AircraftManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = Aircraft
     form_class = AircraftManagerForm
     template_name = 'manager/apps/aircraft/aircraft.html'
@@ -52,7 +53,7 @@ class AircraftManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class AircraftManagerDeleteView(SuccessMessageMixin, DeleteView):
+class AircraftManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = Aircraft
     template_name = 'manager/apps/aircraft/aircraft.html'
     context_object_name = 'aircraft'
@@ -60,7 +61,7 @@ class AircraftManagerDeleteView(SuccessMessageMixin, DeleteView):
     success_message = _('Delete object is successful')
 
 
-class AircraftManagerCreateView(SuccessMessageMixin, CreateView):
+class AircraftManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = Aircraft
     form_class = AircraftManagerForm
     template_name = 'manager/apps/aircraft/aircraft.html'
@@ -72,7 +73,7 @@ class AircraftManagerCreateView(SuccessMessageMixin, CreateView):
     }
 
 
-class AircraftModelManagerListView(ListView):
+class AircraftModelManagerListView(SupervisorManagerMixin, ListView):
     model = AircraftModel
     template_name = 'manager/apps/aircraft/aircraft-models.html'
     context_object_name = 'aircrafts'
@@ -82,7 +83,7 @@ class AircraftModelManagerListView(ListView):
     }
 
 
-class AircraftModelManagerUpdateView(SuccessMessageMixin, UpdateView):
+class AircraftModelManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = AircraftModel
     form_class = AircraftModelManagerForm
     template_name = 'manager/apps/aircraft/aircraft-model.html'
@@ -95,7 +96,7 @@ class AircraftModelManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class AircraftModelManagerDeleteView(SuccessMessageMixin, DeleteView):
+class AircraftModelManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = AircraftModel
     template_name = 'manager/apps/aircraft/aircraft-model.html'
     context_object_name = 'aircraft'
@@ -103,7 +104,7 @@ class AircraftModelManagerDeleteView(SuccessMessageMixin, DeleteView):
     success_message = _('Delete object is successful')
 
 
-class AircraftModelManagerCreateView(SuccessMessageMixin, CreateView):
+class AircraftModelManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = AircraftModel
     form_class = AircraftModelManagerForm
     template_name = 'manager/apps/aircraft/aircraft-model.html'

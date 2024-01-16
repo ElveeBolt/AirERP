@@ -16,3 +16,8 @@ class GateManagerMixin(UserPassesTestMixin):
 class CheckinManagerMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.groups.filter(name='Checkin managers').exists()
+
+
+class SupervisorManagerMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.groups.filter(name='Supervisor').exists()

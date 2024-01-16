@@ -12,6 +12,7 @@ from apps.ticket.models import Ticket
 from apps.ticket.utils import generate_pdf
 
 from .forms import LoginForm, SignUpForm, ChangePasswordForm, UserGroupAssignmentForm
+from .mixins import SupervisorManagerMixin
 from .tasks import send_email_task
 from .models import User
 
@@ -105,7 +106,7 @@ class UserTicketPDFView(View):
         return response
 
 
-class UserManagerListView(ListView):
+class UserManagerListView(SupervisorManagerMixin, ListView):
     model = User
     template_name = 'manager/apps/user/users.html'
     context_object_name = 'users'
@@ -119,7 +120,7 @@ class UserManagerListView(ListView):
         return queryset
 
 
-class UserManagerUpdateView(FormView):
+class UserManagerUpdateView(SupervisorManagerMixin, FormView):
     template_name = 'manager/apps/user/user.html'
     form_class = UserGroupAssignmentForm
     success_url = reverse_lazy('manager-users')
@@ -145,7 +146,7 @@ class UserManagerUpdateView(FormView):
         return super().form_valid(form)
 
 
-class UserManagerDeleteView(SuccessMessageMixin, DeleteView):
+class UserManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = User
     success_url = reverse_lazy('manager-users')
     success_message = _('Delete object is successful')

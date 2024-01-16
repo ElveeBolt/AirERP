@@ -2,13 +2,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, DeleteView, UpdateView, CreateView
+from apps.user.mixins import SupervisorManagerMixin
 
 from .forms import AirportManagerForm, CityManagerForm
 from .models import Airport, City
 
 
 # Create your views here.
-class AirportManagerListView(ListView):
+class AirportManagerListView(SupervisorManagerMixin, ListView):
     model = Airport
     template_name = 'manager/apps/airport/airports.html'
     context_object_name = 'airports'
@@ -18,7 +19,7 @@ class AirportManagerListView(ListView):
     }
 
 
-class AirportManagerUpdateView(SuccessMessageMixin, UpdateView):
+class AirportManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = Airport
     form_class = AirportManagerForm
     template_name = 'manager/apps/airport/airport.html'
@@ -31,13 +32,13 @@ class AirportManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class AirportManagerDeleteView(SuccessMessageMixin, DeleteView):
+class AirportManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = Airport
     success_url = reverse_lazy('manager-airports')
     success_message = _('Delete object is successful')
 
 
-class AirportManagerCreateView(SuccessMessageMixin, CreateView):
+class AirportManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = Airport
     form_class = AirportManagerForm
     template_name = 'manager/apps/airport/airport.html'
@@ -49,7 +50,7 @@ class AirportManagerCreateView(SuccessMessageMixin, CreateView):
     }
 
 
-class CityManagerListView(ListView):
+class CityManagerListView(SupervisorManagerMixin, ListView):
     model = City
     template_name = 'manager/apps/airport/cities.html'
     context_object_name = 'cities'
@@ -59,7 +60,7 @@ class CityManagerListView(ListView):
     }
 
 
-class CityManagerUpdateView(SuccessMessageMixin, UpdateView):
+class CityManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = City
     form_class = CityManagerForm
     template_name = 'manager/apps/airport/city.html'
@@ -72,13 +73,13 @@ class CityManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class CityManagerDeleteView(SuccessMessageMixin, DeleteView):
+class CityManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = City
     success_url = reverse_lazy('manager-airport-cities')
     success_message = _('Delete object is successful')
 
 
-class CityManagerCreateView(SuccessMessageMixin, CreateView):
+class CityManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = City
     form_class = CityManagerForm
     template_name = 'manager/apps/airport/city.html'

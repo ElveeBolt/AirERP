@@ -2,13 +2,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, UpdateView, ListView
 from django.utils.translation import gettext_lazy as _
+from apps.user.mixins import SupervisorManagerMixin
 
 from .forms import ServiceManagerForm, BaggageManagerForm
 from .models import Service, Baggage
 
 
 # Create your views here.
-class ServiceManagerListView(ListView):
+class ServiceManagerListView(SupervisorManagerMixin, ListView):
     model = Service
     template_name = 'manager/apps/service/services.html'
     context_object_name = 'services'
@@ -18,7 +19,7 @@ class ServiceManagerListView(ListView):
     }
 
 
-class ServiceManagerUpdateView(SuccessMessageMixin, UpdateView):
+class ServiceManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = Service
     form_class = ServiceManagerForm
     template_name = 'manager/apps/service/service.html'
@@ -31,13 +32,13 @@ class ServiceManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class ServiceManagerDeleteView(SuccessMessageMixin, DeleteView):
+class ServiceManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = Service
     success_url = reverse_lazy('manager-services')
     success_message = _('Delete object is successful')
 
 
-class ServiceManagerCreateView(SuccessMessageMixin, CreateView):
+class ServiceManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = Service
     form_class = ServiceManagerForm
     template_name = 'manager/apps/service/service.html'
@@ -49,7 +50,7 @@ class ServiceManagerCreateView(SuccessMessageMixin, CreateView):
     }
 
 
-class BaggageManagerListView(ListView):
+class BaggageManagerListView(SupervisorManagerMixin, ListView):
     model = Baggage
     template_name = 'manager/apps/service/baggages.html'
     context_object_name = 'baggages'
@@ -59,7 +60,7 @@ class BaggageManagerListView(ListView):
     }
 
 
-class BaggageManagerUpdateView(SuccessMessageMixin, UpdateView):
+class BaggageManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = Baggage
     form_class = BaggageManagerForm
     template_name = 'manager/apps/service/baggage.html'
@@ -72,13 +73,13 @@ class BaggageManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class BaggageManagerDeleteView(SuccessMessageMixin, DeleteView):
+class BaggageManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = Baggage
     success_url = reverse_lazy('manager-service-baggages')
     success_message = _('Delete object is successful')
 
 
-class BaggageManagerCreateView(SuccessMessageMixin, CreateView):
+class BaggageManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = Baggage
     form_class = BaggageManagerForm
     template_name = 'manager/apps/service/baggage.html'

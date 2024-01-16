@@ -12,6 +12,7 @@ from apps.ticket.models import Ticket
 from apps.ticket.forms import TicketForm, TicketServiceFormSet
 from apps.ticket.utils import generate_pdf
 from apps.user.tasks import send_email_task
+from apps.user.mixins import SupervisorManagerMixin
 
 
 # Create your views here.
@@ -152,7 +153,7 @@ class ThanksView(TemplateView):
         return ticket
 
 
-class FlightManagerListView(ListView):
+class FlightManagerListView(SupervisorManagerMixin, ListView):
     model = Flight
     template_name = 'manager/apps/flight/flights.html'
     context_object_name = 'flights'
@@ -162,7 +163,7 @@ class FlightManagerListView(ListView):
     }
 
 
-class FlightManagerUpdateView(SuccessMessageMixin, UpdateView):
+class FlightManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = Flight
     form_class = FlightManagerForm
     template_name = 'manager/apps/flight/flight.html'
@@ -175,13 +176,13 @@ class FlightManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class FlightManagerDeleteView(SuccessMessageMixin, DeleteView):
+class FlightManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = Flight
     success_url = reverse_lazy('manager-flights')
     success_message = _('Delete object is successful')
 
 
-class FlightManagerCreateView(SuccessMessageMixin, CreateView):
+class FlightManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = Flight
     form_class = FlightManagerForm
     template_name = 'manager/apps/flight/flight.html'
@@ -193,7 +194,7 @@ class FlightManagerCreateView(SuccessMessageMixin, CreateView):
     }
 
 
-class FlightServiceManagerListView(ListView):
+class FlightServiceManagerListView(SupervisorManagerMixin, ListView):
     model = FlightService
     template_name = 'manager/apps/flight/services.html'
     context_object_name = 'services'
@@ -203,7 +204,7 @@ class FlightServiceManagerListView(ListView):
     }
 
 
-class FlightServiceManagerUpdateView(SuccessMessageMixin, UpdateView):
+class FlightServiceManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
     model = FlightService
     form_class = FlightServiceManagerForm
     template_name = 'manager/apps/flight/service.html'
@@ -216,13 +217,13 @@ class FlightServiceManagerUpdateView(SuccessMessageMixin, UpdateView):
     }
 
 
-class FlightServiceManagerDeleteView(SuccessMessageMixin, DeleteView):
+class FlightServiceManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
     model = FlightService
     success_url = reverse_lazy('manager-flight-services')
     success_message = _('Delete object is successful')
 
 
-class FlightServiceManagerCreateView(SuccessMessageMixin, CreateView):
+class FlightServiceManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
     model = FlightService
     form_class = FlightServiceManagerForm
     template_name = 'manager/apps/flight/service.html'

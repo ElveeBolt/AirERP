@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 
 from apps.aircraft.models import AircraftModel
 from apps.flight.forms import FlightSearchForm
+from apps.user.mixins import StaffMixin
 
 
 # Create your views here.
@@ -20,7 +21,7 @@ class IndexView(TemplateView):
         return context
 
 
-class IndexManagerView(TemplateView):
+class IndexManagerView(StaffMixin, TemplateView):
     template_name = 'manager/apps/page/index.html'
     extra_context = {
         'title': _('AirERP'),
