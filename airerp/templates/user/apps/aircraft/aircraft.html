@@ -8,7 +8,7 @@
 
 {% block content %}
     <div class="card mb-4">
-        <img class="rounded-t-xl w-full" src="{{ aircraft.image.url }}" />
+        <img class="rounded-t-xl w-full" src="{% if aircraft.image %}{{ aircraft.image.url }}{% else %}{% static 'images/placeholder_post.png' %}{% endif %}" />
         <div class="p-4">
             <div class="mb-4 flex text-gray-400 space-x-5">
                 <div>{% trans 'Manufacturer:' %} {{ aircraft.manufacturer }}</div>

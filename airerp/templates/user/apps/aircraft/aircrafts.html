@@ -8,11 +8,11 @@
 {% block subtitle %}{{ subtitle }}{% endblock subtitle %}
 
 {% block content %}
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 gap-4 mb-4">
         {% for aircraft in aircrafts %}
         <div class="card">
             <a href="{% url 'aircraft' pk=aircraft.pk %}" class="block h-52 overflow-hidden">
-                <img class="rounded-t-xl" src="{{ aircraft.image.url }}" />
+                <img class="rounded-t-xl" src="{% if aircraft.image %}{{ aircraft.image.url }}{% else %}{% static 'images/placeholder_post.png' %}{% endif %}" />
             </a>
             <div class="p-5">
                 <a href="{% url 'aircraft' pk=aircraft.pk %}">
