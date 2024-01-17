@@ -164,3 +164,21 @@ class TicketServiceManagerForm(forms.ModelForm):
 
         choices = [(service.id, service) for service in self.services]
         self.fields['service'].widget = forms.Select(choices=choices)
+
+
+class TicketCheckinManagerForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ('is_checkin', )
+        widgets = {
+            'is_checkin': forms.CheckboxInput(attrs={'class': 'form-control'}),
+        }
+
+
+class TicketOnboardingManagerForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ('is_onboarding', )
+        widgets = {
+            'is_onboarding': forms.CheckboxInput(attrs={'class': 'form-control'}),
+        }

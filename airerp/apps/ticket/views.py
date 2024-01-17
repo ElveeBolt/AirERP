@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView, UpdateView, ListView, CreateView, DetailView, FormView
 from django.utils.translation import gettext_lazy as _
 
-from .forms import TicketManagerForm, TicketServiceManagerForm
+from .forms import TicketManagerForm, TicketServiceManagerForm, TicketCheckinManagerForm, TicketOnboardingManagerForm
 from .models import Ticket, TicketService
 
 
@@ -106,3 +106,29 @@ class TicketServiceManagerDeleteView(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('manager-tickets')
     pk_url_kwarg = 'service_id'
     success_message = _('Delete object is successful')
+
+
+class TicketCheckinManagerUpdateView(SuccessMessageMixin, UpdateView):
+    model = Ticket
+    template_name = 'manager/apps/ticket/ticket-checkin.html'
+    form_class = TicketCheckinManagerForm
+    extra_context = {
+        'title': _('Ticket checkin'),
+        'subtitle': _('Ticket checkin status')
+    }
+
+    def get_success_url(self):
+        return reverse_lazy('manager-ticket', args=[self.kwargs.get('pk')])
+
+
+class TicketOnboardingManagerUpdateView(SuccessMessageMixin, UpdateView):
+    model = Ticket
+    template_name = 'manager/apps/ticket/ticket-onboarding.html'
+    form_class = TicketOnboardingManagerForm
+    extra_context = {
+        'title': _('Ticket onboarding'),
+        'subtitle': _('Ticket onboarding status')
+    }
+
+    def get_success_url(self):
+        return reverse_lazy('manager-ticket', args=[self.kwargs.get('pk')])

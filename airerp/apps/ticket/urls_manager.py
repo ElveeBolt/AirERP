@@ -6,7 +6,9 @@ from .views import (
     TicketServiceManagerCreateView,
     TicketServiceManagerListView,
     TicketServiceManagerDeleteView,
-    TicketServiceManagerDetailView
+    TicketServiceManagerDetailView,
+    TicketCheckinManagerUpdateView,
+    TicketOnboardingManagerUpdateView
 )
 
 urlpatterns = [
@@ -17,4 +19,6 @@ urlpatterns = [
     path('<int:pk>/services/create', TicketServiceManagerCreateView.as_view(), name='manager-ticket-service-create'),
     path('<int:pk>/services/<int:service_id>', TicketServiceManagerDetailView.as_view(), name='manager-ticket-service'),
     path('<int:pk>/services/<int:service_id>/delete', TicketServiceManagerDeleteView.as_view(), name='manager-ticket-service-delete'),
+    path('<int:pk>/checkin/', TicketCheckinManagerUpdateView.as_view(), name='manager-ticket-checkin'),
+    path('<int:pk>/onboarding/', TicketOnboardingManagerUpdateView.as_view(), name='manager-ticket-onboarding'),
 ]

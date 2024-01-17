@@ -116,9 +116,13 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="flex space-x-4">
+        <div class="flex space-x-4 mb-4">
             <a href="{% url 'manager-ticket-service-create' pk=ticket.pk %}" class="btn btn-primary"><i class="las la-hamburger"></i>{% trans 'Add service' %}</a>
             <a href="{% url 'manager-ticket-services' pk=ticket.pk %}" class="btn btn-light"><i class="las la-luggage-cart"></i>{% trans 'List services' %}</a>
+        </div>
+        <div class="flex space-x-4">
+            <a href="{% url 'manager-ticket-checkin' pk=ticket.pk %}" class="btn btn-light"><i class="las la-check-circle"></i>{% trans 'Checkin status' %}</a>
+            <a href="{% url 'manager-ticket-onboarding' pk=ticket.pk %}" class="btn btn-light"><i class="las la-check-circle"></i>{% trans 'Onboarding status' %}</a>
         </div>
     </div>
 </div>
