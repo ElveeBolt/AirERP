@@ -15,7 +15,17 @@
               </div>
           </button>
           <div id="user-dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-            <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+            {% if not user.is_authenticated %}
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+              <li>
+                <a href="{% url 'login' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'Login' %}</a>
+              </li>
+              <li>
+                <a href="{% url 'signup' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{% trans 'Sign up' %}</a>
+              </li>
+            </ul>
+          {% else %}
+              <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
               <div class="font-medium ">{{ user }}</div>
               <div class="truncate">{{ user.email }}</div>
             </div>
@@ -38,6 +48,7 @@
                     </button>
                 </form>
             </div>
+          {% endif %}
         </div>
       <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
