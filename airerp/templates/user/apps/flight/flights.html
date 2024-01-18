@@ -66,4 +66,9 @@
         </div>
     </div>
     {% endfor %}
+    {% include 'user/components/pagination.html' %}
 {% endblock content %}
+
+{% block sideright %}
+    {% include 'user/apps/flight/flight-filter.html' %}
+{% endblock %}

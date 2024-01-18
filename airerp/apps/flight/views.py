@@ -1,13 +1,15 @@
+from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ExpressionWrapper, F, DurationField
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import FormMixin, CreateView, DeleteView, UpdateView
+from django_filters.views import FilterView
 
 from .forms import FlightManagerForm, FlightServiceManagerForm
 from .models import Flight, FlightService
-from apps.airport.models import Airport
+from .filters import FlightFilter
 from apps.ticket.models import Ticket
 from apps.ticket.forms import TicketForm, TicketServiceFormSet
 from apps.ticket.utils import generate_pdf
@@ -16,32 +18,20 @@ from apps.user.mixins import SupervisorManagerMixin
 
 
 # Create your views here.
-class FlightListView(ListView):
+class FlightListView(FilterView):
     model = Flight
     template_name = 'user/apps/flight/flights.html'
     context_object_name = 'flights'
+    paginate_by = settings.PAGINATION_COUNT
+    filterset_class = FlightFilter
     extra_context = {
         'title': _('Search results'),
         'subtitle': _('Compare prices. Book the best tickets. Enjoy your journey.')
     }
 
-    def get_search_filters(self):
-        departure_from = Airport.objects.get(id=self.request.GET.get('departure_from'))
-        arrival_to = Airport.objects.get(id=self.request.GET.get('arrival_to'))
-
-        return {
-            'departure_from': departure_from,
-            'arrival_to': arrival_to,
-            'departure_time': self.request.GET.get('departure_time')
-        }
-
     def get_queryset(self):
-        filters = self.get_search_filters()
-        queryset = self.model.objects.filter(
-            departure_from=filters.get('departure_from'),
-            arrival_to=filters.get('arrival_to'),
-            departure_time__gte=filters.get('departure_time')
-        ).annotate(
+        queryset = super().get_queryset()
+        queryset = queryset.annotate(
             duration=ExpressionWrapper(
                 F('arrival_time') - F('departure_time'),
                 output_field=DurationField()

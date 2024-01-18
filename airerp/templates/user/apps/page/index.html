@@ -20,16 +20,16 @@
                     <form method="get" action="{% url 'flights' %}">
                         <div class="flex items-center justify-between space-x-3">
                             <div class="mb-3 md:mb-0 flex-1">
-                                {{ form.departure_from }}
+                                {{ form.form.departure_from }}
                             </div>
                             <div class="mb-3 md:mb-0 flex-1">
-                                {{ form.arrival_to }}
+                                {{ form.form.arrival_to }}
                             </div>
                             <div class="mb-3 md:mb-0 flex-1">
-                                {{ form.seat_class }}
+                                {{ form.form.seat_class }}
                             </div>
                             <div class="mb-3 md:mb-0 flex-1">
-                                {{ form.departure_time }}
+                                {{ form.form.departure_time }}
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary flex-1">
