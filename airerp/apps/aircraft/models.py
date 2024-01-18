@@ -1,4 +1,11 @@
+import os
+import sys
+from io import BytesIO
+
+from PIL import Image
+from cloudinary.models import CloudinaryField
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -9,10 +16,35 @@ class AircraftModel(models.Model):
     description = models.TextField(verbose_name=_('Description'))
     manufacturer = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Manufacturer'))
     manufacturer_year = models.IntegerField(null=False, blank=False, verbose_name=_('Manufacturer year'))
-    image = models.ImageField(upload_to='aircraft', null=True, blank=True, verbose_name=_('Image'))
+    image = CloudinaryField('aircraft', null=True, blank=True, max_length=255)
+    thumbnail = CloudinaryField('aircraft/thumbnails')
 
     def __str__(self):
         return f"{self.name}"
+
+    def save(self, **kwargs):
+        width = 1280
+        height = 720
+
+        output_size = (width, height)
+        output_thumb = BytesIO()
+
+        img = Image.open(self.image)
+        img_name = os.path.splitext(self.image.name)[0]
+
+        if img.height > height or img.width > width:
+            img.thumbnail(output_size, Image.Resampling.LANCZOS)
+            img.save(output_thumb, format=img.format, quality=90)
+
+        self.thumbnail = InMemoryUploadedFile(
+            file=output_thumb,
+            field_name='ImageField',
+            name=f"{img_name}_thumb.{img.format}",
+            content_type='image/jpeg',
+            size=sys.getsizeof(output_thumb),
+            charset=None
+        )
+        super().save()
 
     class Meta:
         verbose_name = _('model')

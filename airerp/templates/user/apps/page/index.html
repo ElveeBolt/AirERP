@@ -54,7 +54,7 @@
         {% for aircraft in aircrafts %}
             <div class="card">
                 <a href="{% url 'aircraft' pk=aircraft.pk %}" class="block h-52 overflow-hidden">
-                    <img class="rounded-t-xl" src="{{ aircraft.image.url }}" />
+                    <img class="rounded-t-xl" src="{{ aircraft.thumbnail.url }}" />
                 </a>
                 <div class="p-5">
                     <a href="{% url 'aircraft' pk=aircraft.pk %}">
