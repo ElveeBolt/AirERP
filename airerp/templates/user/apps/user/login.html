@@ -41,6 +41,9 @@
                           <a href="{% url 'signup' %}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">{% trans 'Sign up' %}</a>
                       </p>
                   </form>
+                  <div class="flex justify-between">
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn px-3 btn-light"><i class="lab la-google-plus-g"></i>{% trans 'Login with Google' %}</a>
+                </div>
               </div>
           </div>
       </div>

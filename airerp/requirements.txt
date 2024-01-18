@@ -6,3 +6,4 @@ celery==5.3.6
 redis==5.0.1
 daphne==4.0.0
 channels==4.0.0
+social-auth-app-django==5.4.0
