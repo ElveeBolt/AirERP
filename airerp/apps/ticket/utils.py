@@ -47,17 +47,3 @@ def generate_pdf(ticket_id: int):
     buffer.seek(0)
     doc.build(story)
     return buffer
-
-
-def send_ticket_email(user_email: str, ticket_id: int):
-    buffer = generate_pdf(ticket_id=ticket_id)
-
-    message = render_to_string(
-        template_name='user/emails/ticket.html',
-        context={
-            'user_email': user_email,
-        }
-    )
-    email = EmailMessage(subject=_('Your ticket AirERP'), body=message, to=[user_email])
-    email.attach('ticket.pdf', buffer.getvalue(), 'application/pdf')
-    email.send()

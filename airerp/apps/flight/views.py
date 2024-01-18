@@ -1,3 +1,5 @@
+import base64
+
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ExpressionWrapper, F, DurationField
@@ -123,6 +125,8 @@ class ThanksView(TemplateView):
         context['ticket'] = ticket
 
         buffer = generate_pdf(ticket_id=ticket.id)
+        buffer_content = buffer.getvalue()
+        buffer_base64 = base64.b64encode(buffer_content).decode('utf-8')
 
         send_email_task.delay(
             template='user/emails/ticket.html',
@@ -130,12 +134,11 @@ class ThanksView(TemplateView):
             user_email=ticket.user.email,
             attach={
                 'filename': 'ticket.pdf',
-                'content': buffer,
+                'content': buffer_base64,
                 'mimetype': 'application/pdf'
             }
         )
 
-        return context
 
     def get_ticket(self):
         ticket_id = self.request.session.get('ticket')
