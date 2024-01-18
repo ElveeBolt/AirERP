@@ -13,6 +13,14 @@
         <div class="p-4">
             <div class="flex space-x-4">
                 <div class="flex-1">
+                    <div class="mb-4 pb-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                        <div class="text-gray-500 text-sm">{% trans 'Departure:' %} {{ flight.departure_from.city }}</div>
+                        <div>
+                            <div class="bg-gray-50 text-gray-400 text-xs font-medium px-2.5 py-1 rounded dark:bg-gray-700 dark:text-gray-300">
+                                {{ flight.get_seat_class_display }}
+                            </div>
+                        </div>
+                    </div>
                     <div class="flex flex-1 items-center space-x-3">
                         <div class="text-center">
                             <div class="text-2xl bg-gray-50 w-12 h-12 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-400">
@@ -24,8 +32,7 @@
                         <div class="flex-1 relative">
                             <span class="w-2 h-2 block absolute bg-blue-500 -mt-1 rounded-full"></span>
                             <div class="block border-t border-dashed border-blue-500 w-full"></div>
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -mt-4 text-sm">{{ flight.duration }}</div>
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 text-sm text-gray-400 dark:text-gray-400">{{ flight.aircraft.name }}</div>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border border-dashed border-blue-500 px-4 py-1 rounded-xl text-sm">{{ flight.duration }}</div>
                             <span class="w-2 h-2 block absolute bg-blue-500 -mt-1 rounded-full right-0"></span>
                         </div>
                         <div class="text-center">
@@ -44,10 +51,8 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="border-l border-gray-200 dark:border-gray-700 pl-4 text-center flex flex-col">
-                    <div class="bg-gray-50 text-gray-400 text-xs font-medium me-2 px-2.5 py-1 rounded dark:bg-gray-700 dark:text-gray-300 mb-3">
-                        {{ flight.get_seat_class_display }}
-                    </div>
+                <div class="border-l border-gray-200 dark:border-gray-700 pl-4 text-center flex flex-col w-444">
+                    <div class="text-sm text-gray-400 dark:text-gray-400 mb-6">{{ flight.aircraft.model }}</div>
                     <div class="text-sm text-gray-500 dark:text-gray-400">{% trans 'Base ticket price' %}</div>
                     <div class="font-bold mb-4 text-blue-500 text-2xl">{{ flight.base_price }} $</div>
                     <div class="mt-auto">
