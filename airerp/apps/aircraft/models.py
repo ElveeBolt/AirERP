@@ -1,50 +1,49 @@
-import os
-import sys
-from io import BytesIO
-
-from PIL import Image
 from cloudinary.models import CloudinaryField
+from cloudinary.utils import cloudinary_url
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
+class AircraftManufacturerModel(models.Model):
+    title = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('title'))
+    image = CloudinaryField('aircraft/manufacturer', null=True, blank=True, max_length=255)
+    description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
+
+    def __str__(self):
+        return f"{self.title}"
+
+    class Meta:
+        verbose_name = _('manufacturers')
+        verbose_name_plural = _('Manufacturer')
+
+
 class AircraftModel(models.Model):
     name = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Model name'))
     description = models.TextField(verbose_name=_('Description'))
-    manufacturer = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Manufacturer'))
+    manufacturer = models.ForeignKey(AircraftManufacturerModel, on_delete=models.CASCADE, verbose_name=_('Manufacturer'))
     manufacturer_year = models.IntegerField(null=False, blank=False, verbose_name=_('Manufacturer year'))
     image = CloudinaryField('aircraft', null=True, blank=True, max_length=255)
-    thumbnail = CloudinaryField('aircraft/thumbnails')
+    thumbnail = CloudinaryField('aircraft', null=True, blank=True, max_length=255)
 
     def __str__(self):
         return f"{self.name}"
 
-    def save(self, **kwargs):
-        width = 1280
-        height = 720
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
-        output_size = (width, height)
-        output_thumb = BytesIO()
-
-        img = Image.open(self.image)
-        img_name = os.path.splitext(self.image.name)[0]
-
-        if img.height > height or img.width > width:
-            img.thumbnail(output_size, Image.Resampling.LANCZOS)
-            img.save(output_thumb, format=img.format, quality=90)
-
-        self.thumbnail = InMemoryUploadedFile(
-            file=output_thumb,
-            field_name='ImageField',
-            name=f"{img_name}_thumb.{img.format}",
-            content_type='image/jpeg',
-            size=sys.getsizeof(output_thumb),
-            charset=None
-        )
-        super().save()
+        if self.image:
+            img_public_id = self.image.public_id
+            img_url, options = cloudinary_url(
+                img_public_id,
+                format="jpg",
+                crop="fill",
+                width=1280,
+                height=720
+            )
+            self.thumbnail = img_url
+            super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('model')

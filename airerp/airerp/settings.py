@@ -220,8 +220,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SEC
 
 # Cloudinary settings
 cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME", ""),
-    api_key=os.environ.get("CLOUDINARY_API_KEY", ""),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET", "")
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME", "drs975d84"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY", "529777148314674"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET", "cFgtbQyVLXNS7UgROUgaIeAbv98")
 )
 
