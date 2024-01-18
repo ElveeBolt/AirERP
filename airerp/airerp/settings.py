@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@=v0udi!h-g%f(pt^6z^(*6s4c+le44%w^*mgi%psm=r)wmn*#'
+SECRET_KEY = os.environ.get('DEBUG', 'django-insecure-@=v0udi!h-g%f(pt^6z^(*6s4c+le44%w^*mgi%psm=r)wmn*#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', True))
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split()
 
 
 # Application definition
@@ -93,7 +93,16 @@ ASGI_APPLICATION = "airerp.asgi.application"
 
 AUTH_USER_MODEL = "user.User"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if os.environ.get('EMAIL_HOST'):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ.get('EMAIL_HOST')
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = os.environ.get('EMAIL_PORT')
+    EMAIL_USE_TLS = int(os.environ.get('EMAIL_USE_TLS', True))
+    EMAIL_USE_SSL = int(os.environ.get('EMAIL_USE_SSL', True))
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Database
