@@ -20,7 +20,7 @@ class AircraftManufacturerModel(models.Model):
 
 
 class AircraftModel(models.Model):
-    name = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Model name'))
+    title = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Model title'))
     description = models.TextField(verbose_name=_('Description'))
     manufacturer = models.ForeignKey(AircraftManufacturerModel, on_delete=models.CASCADE, verbose_name=_('Manufacturer'))
     manufacturer_year = models.IntegerField(null=False, blank=False, verbose_name=_('Manufacturer year'))
@@ -28,7 +28,7 @@ class AircraftModel(models.Model):
     thumbnail = CloudinaryField('aircraft', null=True, blank=True, max_length=255)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.title}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -51,7 +51,7 @@ class AircraftModel(models.Model):
 
 
 class Aircraft(models.Model):
-    name = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Name'))
+    title = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Name'))
     model = models.ForeignKey(AircraftModel, on_delete=models.CASCADE, verbose_name=_('Aircraft Model'))
     total_seats = models.PositiveIntegerField(default=0, verbose_name=_('Total seats'))
     window_seats = models.PositiveIntegerField(default=0, verbose_name=_('Window seats'))
@@ -59,7 +59,7 @@ class Aircraft(models.Model):
     aisle_seats = models.PositiveIntegerField(default=0, verbose_name=_('Aisle seat'))
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.title}"
 
     def clean(self):
         total_seat_types = self.window_seats + self.extra_legroom_seats + self.aisle_seats

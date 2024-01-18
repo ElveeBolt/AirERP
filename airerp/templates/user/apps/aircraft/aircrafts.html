@@ -1,4 +1,4 @@
-{% extends 'user/layouts/grid1_layout.html' %}
+{% extends 'user/layouts/grid2_layout.html' %}
 
 {% load i18n %}
 {% load static %}
@@ -8,7 +8,7 @@
 {% block subtitle %}{{ subtitle }}{% endblock subtitle %}
 
 {% block content %}
-    <div class="grid grid-cols-3 gap-4 mb-4">
+    <div class="grid grid-cols-2 gap-4 mb-4">
         {% for aircraft in aircrafts %}
         <div class="card">
             <a href="{% url 'aircraft' pk=aircraft.pk %}" class="block h-52 overflow-hidden">
@@ -16,7 +16,7 @@
             </a>
             <div class="p-5">
                 <a href="{% url 'aircraft' pk=aircraft.pk %}">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ aircraft.name }}</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ aircraft.title }}</h5>
                 </a>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ aircraft.description | truncatewords:20 }}</p>
                 <div class="flex">
@@ -29,4 +29,9 @@
         </div>
         {% endfor %}
     </div>
+    {% include 'user/components/pagination.html' %}
 {% endblock content %}
+
+{% block sideright %}
+    {% include 'user/apps/aircraft/aircraft-filter.html' %}
+{% endblock %}

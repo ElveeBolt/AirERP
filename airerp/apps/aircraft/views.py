@@ -1,22 +1,39 @@
+from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
+from django_filters.views import FilterView
 from django.utils.translation import gettext_lazy as _
 from apps.user.mixins import SupervisorManagerMixin
 
 from .models import AircraftModel, Aircraft
 from .forms import AircraftManagerForm, AircraftModelManagerForm
+from .filters import AircraftFilter
 
 
 # Create your views here.
-class AircraftListView(ListView):
+class AircraftListView(FilterView):
     model = AircraftModel
     template_name = 'user/apps/aircraft/aircrafts.html'
     context_object_name = 'aircrafts'
+    paginate_by = settings.PAGINATION_COUNT
+    filterset_class = AircraftFilter
     extra_context = {
         'title': _('Aircrafts'),
         'subtitle': _('List of all AirERP aircrafts')
     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['querystring'] = self.get_querystring()
+        return context
+
+    def get_querystring(self):
+        if self.request.GET:
+            querystring = self.request.GET.copy()
+            if self.request.GET.get('page'):
+                del querystring['page']
+            return querystring.urlencode()
 
 
 class AircraftDetailView(DetailView):

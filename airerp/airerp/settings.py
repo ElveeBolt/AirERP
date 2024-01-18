@@ -183,6 +183,9 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Pagination settings
+PAGINATION_COUNT = 10
+
 # Redirect before login or logout
 LOGIN_REDIRECT_URL = 'user'
 LOGOUT_REDIRECT_URL = 'login'

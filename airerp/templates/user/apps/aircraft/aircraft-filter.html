@@ -1,0 +1,24 @@
+{% load i18n %}
+
+<div class="card mb-4">
+    <div class="p-4">
+        <div class="card-header">
+            <h2 class="card-title">{% trans 'Filter' %}</h2>
+            <div class="card-subtitle">{% trans 'Use parameters for data filtering' %}</div>
+        </div>
+        <form method="get">
+            <div class="mb-3">
+                <label class="form-label" for="{{ filter.form.title.auto_id }}">{{ filter.form.title.label_tag }}</label>
+                {{ filter.form.title }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="{{ filter.form.manufacturer.auto_id }}">{{ filter.form.manufacturer.label_tag }}</label>
+                {{ filter.form.manufacturer }}
+            </div>
+            <div class="block 2xl:flex gap-4">
+                <button type="submit" class="btn btn-primary w-full mb-3 2xl:mb-0 2xl:flex-1"><i class="las la-filter"></i>{% trans 'Apply filter' %}</button>
+                <a href="{% url 'aircrafts' %}" class="btn btn-light w-full 2xl:flex-1"><i class="las la-broom"></i>{% trans 'Clear filter' %}</a>
+            </div>
+        </form>
+    </div>
+</div>
