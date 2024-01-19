@@ -17,7 +17,6 @@ from .tasks import send_email_task
 from .models import User
 
 
-
 # Create your views here.
 class UserLoginView(LoginView):
     form_class = LoginForm
@@ -62,7 +61,7 @@ class UserView(LoginRequiredMixin, TemplateView):
     }
 
 
-class UserChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+class UserChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     template_name = 'user/apps/user/change_password.html'
     success_url = reverse_lazy('change-password')
     success_message = _('Change user password is success')
@@ -73,7 +72,7 @@ class UserChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     }
 
 
-class UserTicketListView(ListView):
+class UserTicketListView(LoginRequiredMixin, ListView):
     model = Ticket
     template_name = 'user/apps/user/tickets.html'
     context_object_name = 'tickets'
@@ -86,7 +85,7 @@ class UserTicketListView(ListView):
         return self.model.objects.filter(user=self.request.user)
 
 
-class UserTicketDetailView(DetailView):
+class UserTicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
     template_name = 'user/apps/user/ticket.html'
     context_object_name = 'ticket'
@@ -96,7 +95,7 @@ class UserTicketDetailView(DetailView):
     }
 
 
-class UserTicketPDFView(View):
+class UserTicketPDFView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         ticket_id = self.kwargs.get('pk')
 

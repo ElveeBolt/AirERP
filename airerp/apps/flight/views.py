@@ -1,6 +1,5 @@
-import base64
-
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ExpressionWrapper, F, DurationField
 from django.urls import reverse_lazy
@@ -19,7 +18,7 @@ from apps.user.mixins import SupervisorManagerMixin
 
 
 # Create your views here.
-class FlightListView(FilterView):
+class FlightListView(LoginRequiredMixin, FilterView):
     model = Flight
     template_name = 'user/apps/flight/flights.html'
     context_object_name = 'flights'
@@ -41,7 +40,7 @@ class FlightListView(FilterView):
         return queryset
 
 
-class FlightDetailView(DetailView, FormMixin):
+class FlightDetailView(LoginRequiredMixin, DetailView, FormMixin):
     model = Flight
     form_class = TicketForm
     template_name = 'user/apps/flight/flight.html'
@@ -91,7 +90,7 @@ class FlightDetailView(DetailView, FormMixin):
             return self.form_invalid(form)
 
 
-class ConfirmView(TemplateView):
+class ConfirmView(LoginRequiredMixin, TemplateView):
     template_name = 'user/apps/flight/confirm.html'
     extra_context = {
         'title': _('Confirm'),
@@ -111,7 +110,7 @@ class ConfirmView(TemplateView):
         return ticket
 
 
-class ThanksView(TemplateView):
+class ThanksView(LoginRequiredMixin, TemplateView):
     template_name = 'user/apps/flight/thanks.html'
     extra_context = {
         'title': _('Thanks'),
