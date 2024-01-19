@@ -16,4 +16,5 @@ def send_email_task(subject, template, user_email):
     )
 
     email = EmailMessage(subject, body=message, to=[user_email])
+    email.content_subtype = 'html'
     email.send()

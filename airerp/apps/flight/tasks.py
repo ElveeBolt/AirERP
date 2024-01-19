@@ -17,5 +17,6 @@ def send_email_ticket_task(subject, template, user_email, ticket_id):
     buffer = generate_pdf(ticket_id=ticket_id)
 
     email = EmailMessage(subject, body=message, to=[user_email])
+    email.content_subtype = 'html'
     email.attach(filename='ticket.pdf', content=buffer.getvalue(), mimetype='application/pdf')
     email.send()
