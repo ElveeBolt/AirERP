@@ -6,7 +6,8 @@ services:
     build:
       context: ./airerp
       dockerfile: Dockerfile
-    command: gunicorn airerp.wsgi:application --workers 5 --timeout=600 --bind 0.0.0.0:8000
+
+    command: daphne -b 0.0.0.0 -p 8000 airerp.asgi:application
     volumes:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
@@ -60,16 +61,6 @@ services:
       - "6379:6379"
     volumes:
       - redis_volume:/data
-
-  redis-commander:
-    container_name: redis-commander2
-    hostname: redis-commander2
-    image: ghcr.io/joeferner/redis-commander:latest
-    restart: always
-    environment:
-      - REDIS_HOSTS=local:redis:6379
-    ports:
-      - "8081:8081"
 
 
 volumes:
