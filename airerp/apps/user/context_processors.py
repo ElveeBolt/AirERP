@@ -54,6 +54,11 @@ def manager_menu(request):
                 'icon': 'las la-cog'
             },
             {
+                'title': _('Aircraft manufacturers'),
+                'link': 'manager-aircraft-manufacturers',
+                'icon': 'las la-industry'
+            },
+            {
                 'title': _('Airports'),
                 'link': 'manager-airports',
                 'icon': 'las la-map-marker'

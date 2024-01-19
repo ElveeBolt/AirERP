@@ -25,7 +25,7 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 display" id="dataTable">
                 <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="pl-4 pr-2 py-3">{% trans 'Name' %}</th>
+                        <th scope="col" class="pl-4 pr-2 py-3">{% trans 'Title' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Manufacturer' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Manufacturer year' %}</th>
                         <th scope="col" class="pl-2 pr-4 py-3"><span class="sr-only">View</span></th>
@@ -35,7 +35,7 @@
                     {% for aircraft in aircrafts %}
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 last:border-none">
                         <th scope="row" class="pl-4 pr-2 py-4 font-medium text-gray-900 dark:text-white">
-                            {{ aircraft.name }}
+                            {{ aircraft.title }}
                         </th>
                         <td class="px-2 py-4">{{ aircraft.manufacturer }}</td>
                         <td class="px-2 py-4">{{ aircraft.manufacturer_year }}</td>

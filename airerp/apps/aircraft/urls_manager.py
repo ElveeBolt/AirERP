@@ -7,7 +7,11 @@ from .views import (
     AircraftModelManagerListView,
     AircraftModelManagerUpdateView,
     AircraftModelManagerDeleteView,
-    AircraftModelManagerCreateView
+    AircraftModelManagerCreateView,
+    AircraftManufactureManagerListView,
+    AircraftManufactureManagerUpdateView,
+    AircraftManufactureManagerDeleteView,
+    AircraftManufactureManagerCreateView,
 )
 
 urlpatterns = [
@@ -20,4 +24,9 @@ urlpatterns = [
     path('models/create/', AircraftModelManagerCreateView.as_view(), name='manager-aircraft-model-create'),
     path('models/<int:pk>', AircraftModelManagerUpdateView.as_view(), name='manager-aircraft-model'),
     path('models/<int:pk>/delete/', AircraftModelManagerDeleteView.as_view(), name='manager-aircraft-model-delete'),
+
+    path('manufacturers', AircraftManufactureManagerListView.as_view(), name='manager-aircraft-manufacturers'),
+    path('manufacturers/create/', AircraftManufactureManagerCreateView.as_view(), name='manager-aircraft-manufacture-create'),
+    path('manufacturers/<int:pk>', AircraftManufactureManagerUpdateView.as_view(), name='manager-aircraft-manufacture'),
+    path('manufacturers/<int:pk>/delete/', AircraftManufactureManagerDeleteView.as_view(), name='manager-aircraft-manufacture-delete'),
 ]

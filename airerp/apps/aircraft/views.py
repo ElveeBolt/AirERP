@@ -6,8 +6,8 @@ from django_filters.views import FilterView
 from django.utils.translation import gettext_lazy as _
 from apps.user.mixins import SupervisorManagerMixin
 
-from .models import AircraftModel, Aircraft
-from .forms import AircraftManagerForm, AircraftModelManagerForm
+from .models import AircraftModel, Aircraft, AircraftManufacturerModel
+from .forms import AircraftManagerForm, AircraftModelManagerForm, AircraftManufacturerManagerForm
 from .filters import AircraftFilter
 
 
@@ -130,4 +130,47 @@ class AircraftModelManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin
     extra_context = {
         'title': _('Create aircraft model'),
         'subtitle': _('Detail information about aircraft model')
+    }
+
+
+class AircraftManufactureManagerListView(SupervisorManagerMixin, ListView):
+    model = AircraftManufacturerModel
+    template_name = 'manager/apps/aircraft/manufacturers.html'
+    context_object_name = 'manufacturers'
+    extra_context = {
+        'title': _('Aircraft manufacturers'),
+        'subtitle': _('List of all AirERP aircraft manufacturers')
+    }
+
+
+class AircraftManufactureManagerUpdateView(SupervisorManagerMixin, SuccessMessageMixin, UpdateView):
+    model = AircraftManufacturerModel
+    form_class = AircraftManufacturerManagerForm
+    template_name = 'manager/apps/aircraft/manufacture.html'
+    context_object_name = 'manufacture'
+    success_message = _('Update object is successful')
+    success_url = reverse_lazy('manager-aircraft-manufacturers')
+    extra_context = {
+        'title': _('Aircraft manufacture'),
+        'subtitle': _('Detail information about aircraft manufacture')
+    }
+
+
+class AircraftManufactureManagerDeleteView(SupervisorManagerMixin, SuccessMessageMixin, DeleteView):
+    model = AircraftManufacturerModel
+    template_name = 'manager/apps/aircraft/manufacture.html'
+    context_object_name = 'manufacture'
+    success_url = reverse_lazy('manager-aircraft-manufacturers')
+    success_message = _('Delete object is successful')
+
+
+class AircraftManufactureManagerCreateView(SupervisorManagerMixin, SuccessMessageMixin, CreateView):
+    model = AircraftManufacturerModel
+    form_class = AircraftManufacturerManagerForm
+    template_name = 'manager/apps/aircraft/manufacture.html'
+    success_url = reverse_lazy('manager-aircraft-manufacture')
+    success_message = _('Create object is successful')
+    extra_context = {
+        'title': _('Create aircraft manufacture'),
+        'subtitle': _('Detail information about aircraft manufacture')
     }

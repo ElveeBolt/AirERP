@@ -15,8 +15,8 @@
             <div class="p-4">
                 <div class="card-header">
                     <div>
-                        <h2 class="card-title">{% trans 'Create aircraft model' %}</h2>
-                        <div class="card-subtitle">{% trans 'Detail information about aircraft model in AirERP' %}</div>
+                        <h2 class="card-title">{% trans 'Create aircraft manufacture' %}</h2>
+                        <div class="card-subtitle">{% trans 'Detail information about manufacture in AirERP' %}</div>
                     </div>
                 </div>
                 <form method="post">
@@ -28,14 +28,6 @@
                     <div class="mb-3">
                         <label class="form-label" for="{{ form.description.auto_id }}">{{ form.description.label_tag }}</label>
                         {{ form.description }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.manufacturer.auto_id }}">{{ form.manufacturer.label_tag }}</label>
-                        {{ form.manufacturer }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.manufacturer_year.auto_id }}">{{ form.manufacturer_year.label_tag }}</label>
-                        {{ form.manufacturer_year }}
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="{{ form.image.auto_id }}">{{ form.image.label_tag }}</label>

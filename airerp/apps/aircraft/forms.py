@@ -1,5 +1,5 @@
 from django import forms
-from .models import Aircraft, AircraftModel
+from .models import Aircraft, AircraftModel, AircraftManufacturerModel
 
 
 class AircraftManagerForm(forms.ModelForm):
@@ -25,5 +25,16 @@ class AircraftModelManagerForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'manufacturer': forms.TextInput(attrs={'class': 'form-control'}),
             'manufacturer_year': forms.NumberInput(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }
+
+
+class AircraftManufacturerManagerForm(forms.ModelForm):
+    class Meta:
+        model = AircraftManufacturerModel
+        fields = ['title', 'description', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
             'image': forms.FileInput(attrs={'class': 'form-control-file'}),
         }
