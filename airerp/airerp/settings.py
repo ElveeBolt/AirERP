@@ -11,24 +11,26 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+from environs import Env
 
 import cloudinary
 from django.utils.translation import gettext_lazy as _
 
+env = Env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DEBUG', 'django-insecure-@=v0udi!h-g%f(pt^6z^(*6s4c+le44%w^*mgi%psm=r)wmn*#')
+SECRET_KEY = env('DEBUG', 'django-insecure-@=v0udi!h-g%f(pt^6z^(*6s4c+le44%w^*mgi%psm=r)wmn*#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get('DEBUG', True))
+DEBUG = env.bool('DEBUG', True)
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split()
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', '127.0.0.1')
 
 
 # Application definition
@@ -93,16 +95,16 @@ ASGI_APPLICATION = "airerp.asgi.application"
 
 AUTH_USER_MODEL = "user.User"
 
-if os.environ.get('EMAIL_HOST'):
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.environ.get('EMAIL_HOST')
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-    EMAIL_PORT = os.environ.get('EMAIL_PORT')
-    EMAIL_USE_TLS = int(os.environ.get('EMAIL_USE_TLS', True))
-    EMAIL_USE_SSL = int(os.environ.get('EMAIL_USE_SSL', True))
-else:
+if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = env.int('EMAIL_PORT')
+    EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', False)
+    EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', False)
 
 
 # Database
@@ -110,12 +112,12 @@ else:
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.environ.get('POSTGRES_DB', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('SQL_HOST'),
-        'PORT': os.environ.get('SQL_PORT'),
+        'ENGINE': env('SQL_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': env('POSTGRES_DB', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': env('POSTGRES_USER', None),
+        'PASSWORD': env('POSTGRES_PASSWORD', None),
+        'HOST': env('SQL_HOST', None),
+        'PORT': env.int('SQL_PORT', None)
     }
 }
 
@@ -176,11 +178,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
-# STATIC_ROOT = BASE_DIR / 'static'
+if DEBUG:
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static"),
+    )
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
 
 
 # Media files
@@ -202,12 +205,12 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
 # Mapbox settings
-MAP_TOKEN = os.environ.get("MAP_TOKEN", "pk.eyJ1Ijoic2FqZW1vcjU4MSIsImEiOiJjbGhoeDRlYWEwMmUyM3NsZXZ0azMzb3p0In0.d0mHDsFHCMgtd4iHKknGlg")
-MAP_STYLE = os.environ.get("MAP_STYLE", "mapbox://styles/mapbox/dark-v11")
+MAP_TOKEN = env("MAP_TOKEN")
+MAP_STYLE = env("MAP_STYLE")
 
 # Celery settings
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
 
 # Auth backends
 AUTHENTICATION_BACKENDS = [
@@ -227,13 +230,12 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY", "")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET", "")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY", "")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET", "")
 
 # Cloudinary settings
 cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME", "drs975d84"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY", "529777148314674"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET", "cFgtbQyVLXNS7UgROUgaIeAbv98")
+    cloud_name=env("CLOUDINARY_CLOUD_NAME"),
+    api_key=env("CLOUDINARY_API_KEY"),
+    api_secret=env("CLOUDINARY_API_SECRET")
 )
-

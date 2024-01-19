@@ -13,7 +13,11 @@ fi
 
 python manage.py makemigrations
 python manage.py migrate
-python manage.py collectstatic --no-input
+
+if [ "$DEBUG" != "True" ]
+then
+    python manage.py collectstatic --no-input
+fi
 
 DJANGO_SUPERUSER_PASSWORD=$SUPERUSER_PASSWORD python manage.py createsuperuser --username $SUPERUSER_NAME --email $SUPERUSER_EMAIL --noinput
 
