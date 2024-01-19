@@ -12,10 +12,9 @@ from django_filters.views import FilterView
 from .forms import FlightManagerForm, FlightServiceManagerForm
 from .models import Flight, FlightService
 from .filters import FlightFilter
+from .tasks import send_email_ticket_task
 from apps.ticket.models import Ticket
 from apps.ticket.forms import TicketForm, TicketServiceFormSet
-from apps.ticket.utils import generate_pdf
-from apps.user.tasks import send_email_task
 from apps.user.mixins import SupervisorManagerMixin
 
 
@@ -124,21 +123,13 @@ class ThanksView(TemplateView):
         ticket = self.get_ticket()
         context['ticket'] = ticket
 
-        buffer = generate_pdf(ticket_id=ticket.id)
-        buffer_content = buffer.getvalue()
-        buffer_base64 = base64.b64encode(buffer_content).decode('utf-8')
-
-        send_email_task.delay(
+        send_email_ticket_task.delay(
             template='user/emails/ticket.html',
             subject=_('Your ticket AirERP'),
             user_email=ticket.user.email,
-            attach={
-                'filename': 'ticket.pdf',
-                'content': buffer_base64,
-                'mimetype': 'application/pdf'
-            }
+            ticket_id=ticket.id
         )
-
+        return context
 
     def get_ticket(self):
         ticket_id = self.request.session.get('ticket')
