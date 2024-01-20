@@ -49,6 +49,12 @@ class Flight(models.Model):
         self.free_aisle_seats = self.aircraft.aisle_seats - Ticket.objects.filter(flight=self, seat_type='aisle').count()
         self.save()
 
+    def update_free_seats(self):
+        Ticket = apps.get_model('ticket', 'Ticket')
+        self.free_window_seats = self.aircraft.window_seats - Ticket.objects.filter(flight=self, seat_type='window').count()
+        self.free_extra_legroom_seats = self.aircraft.extra_legroom_seats - Ticket.objects.filter(flight=self, seat_type='extra_legroom').count()
+        self.free_aisle_seats = self.aircraft.aisle_seats - Ticket.objects.filter(flight=self, seat_type='aisle').count()
+
     def get_available_seat_types(self):
         available_seat_types = {'': _('Random')}
         if self.free_window_seats > 0:

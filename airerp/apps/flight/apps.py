@@ -6,3 +6,6 @@ class FlightConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.flight'
     verbose_name = _('Flight')
+
+    def ready(self):
+        from . import signals
