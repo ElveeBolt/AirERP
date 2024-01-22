@@ -205,8 +205,8 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
 # Mapbox settings
-MAP_TOKEN = env("MAP_TOKEN")
-MAP_STYLE = env("MAP_STYLE")
+MAP_TOKEN = env("MAP_TOKEN", "")
+MAP_STYLE = env("MAP_STYLE", "")
 
 # Celery settings
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", "redis://localhost:6379/0")
@@ -235,7 +235,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET", "")
 
 # Cloudinary settings
 cloudinary.config(
-    cloud_name=env("CLOUDINARY_CLOUD_NAME"),
-    api_key=env("CLOUDINARY_API_KEY"),
-    api_secret=env("CLOUDINARY_API_SECRET")
+    cloud_name=env("CLOUDINARY_CLOUD_NAME", ""),
+    api_key=env("CLOUDINARY_API_KEY", ""),
+    api_secret=env("CLOUDINARY_API_SECRET", "")
 )
