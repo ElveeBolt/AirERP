@@ -31,6 +31,7 @@
                         <th scope="col" class="px-2 py-3">{% trans 'Aircraft' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Base price' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Seat class' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Flight status' %}</th>
                         <th scope="col" class="pl-2 pr-4 py-3"><span class="sr-only">View</span></th>
                     </tr>
                 </thead>
@@ -45,6 +46,13 @@
                         <td class="px-2 py-4">{{ flight.aircraft }}</td>
                         <td class="px-2 py-4">{{ flight.base_price }}</td>
                         <td class="px-2 py-4">{{ flight.seat_class }}</td>
+                        <td class="px-2 py-4">
+                            {% if flight.status == 'C' %}
+                                <span class="bg-green-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-green-400">{{ flight.get_status_display }}</span>
+                            {% else %}
+                                <span class="bg-orange-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-red-400">{{ flight.get_status_display }}</span>
+                            {% endif %}
+                        </td>
                         <td class="pl-2 pr-4 py-4 text-right">
                             <div class="flex space-x-3">
                                 <a href="{% url 'manager-flight' pk=flight.pk %}" class="btn btn-light">

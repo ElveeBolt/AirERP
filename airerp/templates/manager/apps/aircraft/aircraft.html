@@ -30,6 +30,10 @@
                         {{ form.model }}
                     </div>
                     <div class="mb-3">
+                        <label class="form-label" for="{{ form.current_airport.auto_id }}">{{ form.current_airport.label_tag }}</label>
+                        {{ form.current_airport }}
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label" for="{{ form.total_seats.auto_id }}">{{ form.total_seats.label_tag }}</label>
                         {{ form.total_seats }}
                     </div>

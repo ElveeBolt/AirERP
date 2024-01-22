@@ -27,6 +27,7 @@
                     <tr>
                         <th scope="col" class="pl-4 pr-2 py-3">{% trans 'Title' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Model' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Current airport' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Total seats' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Window seats' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Extra legroom' %}</th>
@@ -41,6 +42,7 @@
                             {{ aircraft.title }}
                         </th>
                         <td class="px-2 py-4">{{ aircraft.model }}</td>
+                        <td class="px-2 py-4">{{ aircraft.current_airport }}</td>
                         <td class="px-2 py-4">{{ aircraft.total_seats }}</td>
                         <td class="px-2 py-4">{{ aircraft.window_seats }}</td>
                         <td class="px-2 py-4">{{ aircraft.extra_legroom_seats }}</td>

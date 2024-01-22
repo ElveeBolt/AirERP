@@ -25,21 +25,25 @@
                         <label class="form-label" for="{{ form.code.auto_id }}">{{ form.code.label_tag }}</label>
                         {{ form.code }}
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.departure_from.auto_id }}">{{ form.departure_from.label_tag }}</label>
-                        {{ form.departure_from }}
+                    <div class="grid grid-cols-6 gap-4 mb-3">
+                        <div class="col-span-4">
+                            <label class="form-label" for="{{ form.departure_from.auto_id }}">{{ form.departure_from.label_tag }}</label>
+                            {{ form.departure_from }}
+                        </div>
+                        <div class="col-span-2">
+                            <label class="form-label" for="{{ form.departure_time.auto_id }}">{{ form.departure_time.label_tag }}</label>
+                            {{ form.departure_time }}
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.arrival_to.auto_id }}">{{ form.arrival_to.label_tag }}</label>
-                        {{ form.arrival_to }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.departure_time.auto_id }}">{{ form.departure_time.label_tag }}</label>
-                        {{ form.departure_time }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.arrival_time.auto_id }}">{{ form.arrival_time.label_tag }}</label>
-                        {{ form.arrival_time }}
+                    <div class="grid grid-cols-6 gap-4 mb-3">
+                        <div class="col-span-4">
+                            <label class="form-label" for="{{ form.arrival_to.auto_id }}">{{ form.arrival_to.label_tag }}</label>
+                            {{ form.arrival_to }}
+                        </div>
+                        <div class="col-span-2">
+                            <label class="form-label" for="{{ form.arrival_time.auto_id }}">{{ form.arrival_time.label_tag }}</label>
+                            {{ form.arrival_time }}
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="{{ form.aircraft.auto_id }}">{{ form.aircraft.label_tag }}</label>
@@ -61,17 +65,23 @@
                         <label class="form-label" for="{{ form.seat_class.auto_id }}">{{ form.seat_class.label_tag }}</label>
                         {{ form.seat_class }}
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.window_seat_price.auto_id }}">{{ form.window_seat_price.label_tag }}</label>
-                        {{ form.window_seat_price }}
+                    <div class="grid grid-cols-6 gap-4 mb-3">
+                        <div class="col-span-2">
+                            <label class="form-label" for="{{ form.window_seat_price.auto_id }}">{{ form.window_seat_price.label_tag }}</label>
+                            {{ form.window_seat_price }}
+                        </div>
+                        <div class="col-span-2">
+                            <label class="form-label" for="{{ form.extra_legroom_seat_price.auto_id }}">{{ form.extra_legroom_seat_price.label_tag }}</label>
+                            {{ form.extra_legroom_seat_price }}
+                        </div>
+                        <div class="col-span-2">
+                            <label class="form-label" for="{{ form.aisle_seat_price.auto_id }}">{{ form.aisle_seat_price.label_tag }}</label>
+                            {{ form.aisle_seat_price }}
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="{{ form.extra_legroom_seat_price.auto_id }}">{{ form.extra_legroom_seat_price.label_tag }}</label>
-                        {{ form.extra_legroom_seat_price }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.aisle_seat_price.auto_id }}">{{ form.aisle_seat_price.label_tag }}</label>
-                        {{ form.aisle_seat_price }}
+                        <label class="form-label" for="{{ form.status.auto_id }}">{{ form.status.label_tag }}</label>
+                        {{ form.status }}
                     </div>
                     {% if form.errors %}
                         <div class="text-red-500 text-sm mb-4">{{ form.errors }}</div>

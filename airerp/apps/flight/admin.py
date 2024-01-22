@@ -17,8 +17,8 @@ class FlightServiceAdmin(admin.ModelAdmin):
 class FlightAdmin(admin.ModelAdmin):
     model = Flight
     inlines = (FlightServiceAdminInline,)
-    list_display = ('code', 'seat_class', 'departure_from', 'arrival_to', 'departure_time', 'arrival_time', 'aircraft')
-    list_filter = ('code', 'departure_from', 'arrival_to', 'aircraft')
+    list_display = ('code', 'seat_class', 'departure_from', 'arrival_to', 'departure_time', 'arrival_time', 'aircraft', 'status')
+    list_filter = ('code', 'departure_from', 'arrival_to', 'aircraft', 'status')
 
 
 admin.site.register(FlightService, FlightServiceAdmin)

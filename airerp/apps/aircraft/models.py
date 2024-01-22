@@ -3,6 +3,7 @@ from cloudinary.utils import cloudinary_url
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from apps.airport.models import Airport
 
 
 # Create your models here.
@@ -53,6 +54,7 @@ class AircraftModel(models.Model):
 class Aircraft(models.Model):
     title = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Name'))
     model = models.ForeignKey(AircraftModel, on_delete=models.CASCADE, verbose_name=_('Aircraft Model'))
+    current_airport = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, blank=True)
     total_seats = models.PositiveIntegerField(default=0, verbose_name=_('Total seats'))
     window_seats = models.PositiveIntegerField(default=0, verbose_name=_('Window seats'))
     extra_legroom_seats = models.PositiveIntegerField(default=0, verbose_name=_('Extra legroom'))

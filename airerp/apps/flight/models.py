@@ -16,6 +16,11 @@ class Flight(models.Model):
         ('F', _('First Class')),
     )
 
+    STATUS_CHOICES = (
+        ('S', _('Scheduled')),
+        ('C', _('Completed'))
+    )
+
     code = models.CharField(null=False, blank=False, max_length=255, verbose_name=_('Code'))
     departure_from = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='departure_from', verbose_name=_('Departure from'))
     arrival_to = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='arrival_to', verbose_name=_('Arrival to'))
@@ -33,6 +38,8 @@ class Flight(models.Model):
     free_window_seats = models.PositiveIntegerField(default=0)
     free_extra_legroom_seats = models.PositiveIntegerField(default=0)
     free_aisle_seats = models.PositiveIntegerField(default=0)
+
+    status = models.CharField(null=False, blank=False, max_length=2, default='S', choices=STATUS_CHOICES, verbose_name=_('Flight status'))
 
     def __str__(self):
         return f"{self.code}"
@@ -54,6 +61,10 @@ class Flight(models.Model):
         self.free_window_seats = self.aircraft.window_seats - Ticket.objects.filter(flight=self, seat_type='window').count()
         self.free_extra_legroom_seats = self.aircraft.extra_legroom_seats - Ticket.objects.filter(flight=self, seat_type='extra_legroom').count()
         self.free_aisle_seats = self.aircraft.aisle_seats - Ticket.objects.filter(flight=self, seat_type='aisle').count()
+
+    def save_aircraft_current_airport(self):
+        if self.status == 'C':
+            Aircraft.objects.filter(pk=self.aircraft.pk).update(current_airport=self.arrival_to)
 
     def get_available_seat_types(self):
         available_seat_types = {'': _('Random')}

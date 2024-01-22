@@ -10,7 +10,7 @@ class AircraftManufacturerModelAdmin(admin.ModelAdmin):
 
 class AircraftAdmin(admin.ModelAdmin):
     model = Aircraft
-    list_display = ('title', 'model', 'total_seats', 'window_seats', 'extra_legroom_seats', 'aisle_seats')
+    list_display = ('title', 'model', 'current_airport', 'total_seats', 'window_seats', 'extra_legroom_seats', 'aisle_seats')
     list_filter = ('total_seats',)
 
 
