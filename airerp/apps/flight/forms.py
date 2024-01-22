@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -12,8 +14,8 @@ class FlightManagerForm(forms.ModelForm):
             'code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Code...')}),
             'departure_from': forms.Select(attrs={'class': 'form-control'}),
             'arrival_to': forms.Select(attrs={'class': 'form-control'}),
-            'departure_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
-            'arrival_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'departure_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local', 'min': str(datetime.now())}),
+            'arrival_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local', 'min': str(datetime.now())}),
             'aircraft': forms.Select(attrs={'class': 'form-control'}),
             'base_price': forms.NumberInput(attrs={'class': 'form-control'}),
             'baggage': forms.Select(attrs={'class': 'form-control'}),
@@ -23,6 +25,16 @@ class FlightManagerForm(forms.ModelForm):
             'extra_legroom_seat_price': forms.NumberInput(attrs={'class': 'form-control'}),
             'aisle_seat_price': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        departure_time = cleaned_data.get("departure_time")
+        arrival_time = cleaned_data.get("arrival_time")
+
+        if departure_time > arrival_time:
+            raise forms.ValidationError(_("The arrival date cannot be earlier than the departure date."))
+
+        return cleaned_data
 
 
 class FlightServiceManagerForm(forms.ModelForm):
