@@ -26,6 +26,7 @@
                         <th scope="col" class="px-2 py-3">{% trans 'Flight' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Passenger name' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Seat type' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Seat number' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Is checkin' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'On boarding' %}</th>
                         <th scope="col" class="px-2 py-3">{% trans 'Date booked' %}</th>
@@ -41,6 +42,7 @@
                         <td class="px-2 py-4">{{ ticket.flight }}</td>
                         <td class="px-2 py-4">{{ ticket.first_name }} {{ ticket.last_name }}</td>
                         <td class="px-2 py-4">{{ ticket.seat_type }}</td>
+                        <td class="px-2 py-4">{{ ticket.seat_number }}</td>
                         <td class="px-2 py-4" id="is_checkin_status_{{ ticket.id }}">
                             {% if ticket.is_checkin %}
                                 <span class="bg-green-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-green-400">{{ ticket.is_checkin }}</span>

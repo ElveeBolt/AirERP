@@ -1,7 +1,7 @@
 import random
 import string
 from django.db.models import Sum
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 
 from apps.flight.models import Flight, FlightService
@@ -38,6 +38,7 @@ class Ticket(models.Model):
     document_date_expiry = models.DateField(null=False, blank=False, verbose_name=_('Date document expiry'))
     baggage = models.BooleanField(default=False, verbose_name=_('Additional baggage'))
     seat_type = models.CharField(null=True, blank=True, max_length=100, choices=SEAT_TYPE_CHOICES, verbose_name=_('Seat type'))
+    seat_number = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('Seat number'))
     is_checkin = models.BooleanField(default=False, verbose_name=_('Is checkin'))
     is_onboarding = models.BooleanField(default=False, verbose_name=_('Is onboarding'))
     date_booked = models.DateTimeField(auto_now_add=True, verbose_name=_('Date booked'))
@@ -67,6 +68,7 @@ class Ticket(models.Model):
 
         return total_price
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         if not self.code:
             while True:

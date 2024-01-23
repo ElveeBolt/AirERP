@@ -25,6 +25,10 @@
                         <label class="form-label" for="{{ form.is_checkin.auto_id }}">{{ form.is_checkin.label_tag }}</label>
                         {{ form.is_checkin }}
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.seat_number.auto_id }}">{{ form.seat_number.label_tag }}</label>
+                        {{ form.seat_number }}
+                    </div>
                     {% if form.errors %}
                         <div class="text-red-500 text-sm mb-4">{{ form.errors }}</div>
                     {% endif %}

@@ -169,10 +169,26 @@ class TicketServiceManagerForm(forms.ModelForm):
 class TicketCheckinManagerForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ('is_checkin', )
+        fields = ('is_checkin', 'seat_number')
         widgets = {
             'is_checkin': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'seat_number': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        is_checkin = cleaned_data.get('is_checkin')
+        seat_number = cleaned_data.get('seat_number')
+
+        if is_checkin and not seat_number:
+            raise forms.ValidationError(_('Please add seat number'))
+
+        if is_checkin and seat_number:
+            is_seat_taken = Ticket.objects.filter(flight=self.instance.flight, seat_number=seat_number, is_checkin=True).exists()
+            if is_seat_taken:
+                raise forms.ValidationError(_('The seat is already taken.'))
+
+        return cleaned_data
 
 
 class TicketOnboardingManagerForm(forms.ModelForm):
