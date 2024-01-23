@@ -1,6 +1,6 @@
 from django.apps import apps
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
 from apps.service.models import Service, Baggage
 from apps.airport.models import Airport
 from apps.aircraft.models import Aircraft
@@ -89,6 +89,7 @@ class Flight(models.Model):
                 _('Departure and arrival airports must be different.')
             )
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
