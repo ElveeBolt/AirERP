@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 
 {% block title %}{{ title }}{% endblock title %}
@@ -19,43 +20,7 @@
                         <div class="card-subtitle">{% trans 'Detail information about aircraft in AirERP' %}</div>
                     </div>
                 </div>
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.title.auto_id }}">{{ form.title.label_tag }}</label>
-                        {{ form.title }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.model.auto_id }}">{{ form.model.label_tag }}</label>
-                        {{ form.model }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.current_airport.auto_id }}">{{ form.current_airport.label_tag }}</label>
-                        {{ form.current_airport }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.total_seats.auto_id }}">{{ form.total_seats.label_tag }}</label>
-                        {{ form.total_seats }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.window_seats.auto_id }}">{{ form.window_seats.label_tag }}</label>
-                        {{ form.window_seats }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.extra_legroom_seats.auto_id }}">{{ form.extra_legroom_seats.label_tag }}</label>
-                        {{ form.extra_legroom_seats }}
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.aisle_seats.auto_id }}">{{ form.aisle_seats.label_tag }}</label>
-                        {{ form.aisle_seats }}
-                    </div>
-                    {% if form.errors %}
-                        <div class="text-red-500 text-sm mb-4">{{ form.errors }}</div>
-                    {% endif %}
-                    <div>
-                        <button class="btn btn-primary" type="submit"><i class="las la-save"></i>{% trans 'Save object' %}</button>
-                    </div>
-                </form>
+                {% crispy form form.helper %}
             </div>
         </div>
     </div>

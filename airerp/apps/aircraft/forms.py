@@ -1,4 +1,7 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Fieldset, Layout, Row, Column, ButtonHolder
 from .models import Aircraft, AircraftModel, AircraftManufacturerModel
 
 
@@ -6,15 +9,21 @@ class AircraftManagerForm(forms.ModelForm):
     class Meta:
         model = Aircraft
         fields = ['title', 'model', 'current_airport', 'total_seats', 'window_seats', 'extra_legroom_seats', 'aisle_seats']
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'model': forms.Select(attrs={'class': 'form-control'}),
-            'current_airport': forms.Select(attrs={'class': 'form-control'}),
-            'total_seats': forms.NumberInput(attrs={'class': 'form-control'}),
-            'window_seats': forms.NumberInput(attrs={'class': 'form-control'}),
-            'extra_legroom_seats': forms.NumberInput(attrs={'class': 'form-control'}),
-            'aisle_seats': forms.NumberInput(attrs={'class': 'form-control'}),
-        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        self.helper.layout = Layout(
+            Column('title', 'model', 'current_airport', 'total_seats'),
+            Fieldset(
+                _('Seats informations'),
+                Row('window_seats', 'extra_legroom_seats', 'aisle_seats', css_class='grid grid-cols-3 gap-4 mb-4')
+            ),
+            ButtonHolder(
+                Submit('Save', 'Save', css_class='btn btn-primary'),
+            ),
+        )
 
 
 class AircraftModelManagerForm(forms.ModelForm):

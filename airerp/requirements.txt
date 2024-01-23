@@ -10,3 +10,5 @@ social-auth-app-django==5.4.0
 cloudinary==1.38.0
 django-filter==23.5
 environs==10.3.0
+django-crispy-forms==2.1
+crispy-tailwind==1.0.0
