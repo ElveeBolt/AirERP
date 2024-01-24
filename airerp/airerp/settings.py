@@ -95,6 +95,7 @@ TEMPLATES = [
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
+FIXTURE_DIRS = [os.path.join(BASE_DIR, 'fixtures')]
 
 WSGI_APPLICATION = 'airerp.wsgi.application'
 ASGI_APPLICATION = "airerp.asgi.application"
