@@ -25,6 +25,12 @@ class Ticket(models.Model):
         ('aisle', _('Aisle seat')),
     )
 
+    SEAT_ROWS = (
+        ('A', _('A')),
+        ('B', _('B')),
+        ('C', _('C')),
+    )
+
     code = models.CharField(null=True, max_length=6, unique=True, verbose_name=_('Ticket code'))
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE, verbose_name=_('Flight'))
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('User'))
@@ -39,6 +45,7 @@ class Ticket(models.Model):
     baggage = models.BooleanField(default=False, verbose_name=_('Additional baggage'))
     seat_type = models.CharField(null=True, blank=True, max_length=100, choices=SEAT_TYPE_CHOICES, verbose_name=_('Seat type'))
     seat_number = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('Seat number'))
+    seat_row = models.CharField(null=True, blank=True, max_length=1, choices=SEAT_ROWS, verbose_name=_('Seat row'))
     is_checkin = models.BooleanField(default=False, verbose_name=_('Is checkin'))
     is_onboarding = models.BooleanField(default=False, verbose_name=_('Is onboarding'))
     date_booked = models.DateTimeField(auto_now_add=True, verbose_name=_('Date booked'))

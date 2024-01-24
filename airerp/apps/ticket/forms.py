@@ -1,3 +1,4 @@
+import random
 from datetime import date, timedelta
 
 from django import forms
@@ -169,11 +170,41 @@ class TicketServiceManagerForm(forms.ModelForm):
 class TicketCheckinManagerForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ('is_checkin', 'seat_number')
+        fields = ('is_checkin', 'seat_number', 'seat_row')
         widgets = {
-            'is_checkin': forms.CheckboxInput(attrs={'class': 'form-control'}),
-            'seat_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'is_checkin': forms.CheckboxInput(),
+            'seat_number': forms.NumberInput(attrs={'class': 'form-control', 'readonly': True}),
+            'seat_row': forms.TextInput(attrs={'class': 'form-control', 'readonly': True}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        seat_type = self.instance.seat_type
+        match seat_type:
+            case 'window':
+                seat_row = 'A'
+                free_flight_seats = self.instance.flight.free_window_seats
+            case 'extra_legroom':
+                seat_row = 'B'
+                free_flight_seats = self.instance.flight.free_extra_legroom_seats
+            case 'aisle':
+                seat_row = 'C'
+                free_flight_seats = self.instance.flight.free_aisle_seats
+            case _:
+                seat_row = random.choice(['A', 'B', 'C'])
+                free_flight_seats = self.instance.flight.free_window_seats + self.instance.flight.free_aisle_seats + self.instance.flight.free_extra_legroom_seats
+
+        self.initial['seat_row'] = seat_row
+
+        busy_seats = Ticket.objects.filter(
+            flight=self.instance.flight,
+            is_checkin=True,
+            seat_row=seat_row
+        ).values_list('seat_number', flat=True)
+
+        free_seat_numbers = [free for free in range(1, free_flight_seats + 1) if free not in busy_seats]
+        self.initial['seat_number'] = random.choice(free_seat_numbers)
 
     def clean(self):
         cleaned_data = super().clean()

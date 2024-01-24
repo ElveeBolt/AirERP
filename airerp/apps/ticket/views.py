@@ -112,6 +112,7 @@ class TicketCheckinManagerUpdateView(SuccessMessageMixin, UpdateView):
     model = Ticket
     template_name = 'manager/apps/ticket/ticket-checkin.html'
     form_class = TicketCheckinManagerForm
+    context_object_name = 'ticket'
     extra_context = {
         'title': _('Ticket checkin'),
         'subtitle': _('Ticket checkin status')

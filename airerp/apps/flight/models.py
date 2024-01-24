@@ -49,6 +49,7 @@ class Flight(models.Model):
         free_seats = self.aircraft.total_seats - Ticket.objects.filter(flight=self).count()
         return free_seats
 
+
     def update_seat_availability(self):
         Ticket = apps.get_model('ticket', 'Ticket')
         self.free_window_seats = self.aircraft.window_seats - Ticket.objects.filter(flight=self, seat_type='window').count()
