@@ -13,7 +13,7 @@ from .forms import AircraftManagerForm, AircraftModelManagerForm, AircraftManufa
 
 # Create your tests here.
 class ServiceManagerTestCase(TestCase):
-    fixtures = ['aircraft.json']
+    fixtures = ['aircraft.json', 'airport.json']
 
     def setUp(self):
         self.user = User.objects.create_user(username='admin', email='admin@example.com')
@@ -72,8 +72,7 @@ class ServiceManagerTestCase(TestCase):
         response = self.client.get(reverse('manager-aircraft-model', kwargs={'pk': 1}))
         self.assertIsInstance(response.context['form'], AircraftModelManagerForm)
 
-    # def test_model_update(self, mock_upload):
-    #     mock_upload.return_value = 'path/to/mock/image.jpg'
+    # def test_model_update(self):
     #     self.client.post(reverse('manager-aircraft-model', kwargs={'pk': 1}), {
     #         'title': 'Airbus A330 2',
     #         'description': 'Description',
@@ -90,3 +89,44 @@ class ServiceManagerTestCase(TestCase):
     #     })
     #     baggage = Baggage.objects.get(name='First additional bag up to 60 kg')
     #     self.assertEqual(baggage.name, 'First additional bag up to 60 kg')
+
+    def test_aircraft_manager_list(self):
+        response = self.client.get(reverse('manager-aircrafts'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('aircrafts', response.context)
+
+    def test_aircraft_manager_view(self):
+        response = self.client.get(reverse('manager-aircraft', kwargs={'pk': 5}))
+        self.assertEqual(response.status_code, 200)
+        aircraft = response.context_data['aircraft']
+        self.assertEqual(aircraft.title == 'A330', True)
+
+    def test_aircraft_correct_form(self):
+        response = self.client.get(reverse('manager-aircraft', kwargs={'pk': 5}))
+        self.assertIsInstance(response.context['form'], AircraftManagerForm)
+
+    def test_aircraft_update(self):
+        self.client.post(reverse('manager-aircraft', kwargs={'pk': 5}), {
+            'title': 'A330 2',
+            'model': 1,
+            'current_airport': 1,
+            'total_seats': 10,
+            'window_seats': 2,
+            'extra_legroom_seats': 2,
+            'aisle_seats': 2
+        })
+        aircraft = Aircraft.objects.get(pk=5)
+        self.assertEqual(aircraft.title, 'A330 2')
+
+    def test_aircraft_create(self):
+        self.client.post(reverse('manager-aircraft-create'), {
+            'title': 'A330 3',
+            'model': 1,
+            'current_airport': 1,
+            'total_seats': 10,
+            'window_seats': 2,
+            'extra_legroom_seats': 2,
+            'aisle_seats': 2
+        })
+        aircraft = Aircraft.objects.get(title='A330 3')
+        self.assertEqual(aircraft.title, 'A330 3')
