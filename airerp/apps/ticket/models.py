@@ -1,7 +1,7 @@
 import random
 import string
 from django.db.models import Sum
-from django.db import models, transaction
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.flight.models import Flight, FlightService
@@ -68,7 +68,6 @@ class Ticket(models.Model):
 
         return total_price
 
-    @transaction.atomic()
     def save(self, *args, **kwargs):
         if not self.code:
             while True:

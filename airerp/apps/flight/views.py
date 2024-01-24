@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db import transaction
 from django.db.models import ExpressionWrapper, F, DurationField
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView
@@ -73,10 +74,11 @@ class FlightDetailView(LoginRequiredMixin, DetailView, FormMixin):
         formset = TicketServiceFormSet(request.POST)
 
         if form.is_valid() and formset.is_valid():
-            form_instance = form.save(commit=False)
-            form_instance.flight = Flight.objects.get(pk=self.kwargs.get('pk'))
-            form_instance.user = self.request.user
-            form_instance.save()
+            with transaction.atomic():
+                form_instance = form.save(commit=False)
+                form_instance.flight = Flight.objects.get(pk=self.kwargs.get('pk'))
+                form_instance.user = self.request.user
+                form_instance.save()
 
             instances = formset.save(commit=False)
             for instance in instances:
