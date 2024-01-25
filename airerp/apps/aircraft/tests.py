@@ -1,18 +1,17 @@
-from unittest.mock import patch
+from urllib.parse import urlencode
 
 from django.contrib.auth.models import Group
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from django.urls import reverse
 
 from apps.user.models import User
 
-from .models import Aircraft, AircraftModel, AircraftManufacturerModel
+from .models import Aircraft, AircraftManufacturerModel
 from .forms import AircraftManagerForm, AircraftModelManagerForm, AircraftManufacturerManagerForm
 
 
 # Create your tests here.
-class ServiceManagerTestCase(TestCase):
+class AircraftManagerTestCase(TestCase):
     fixtures = ['aircraft.json', 'airport.json']
 
     def setUp(self):
@@ -72,24 +71,6 @@ class ServiceManagerTestCase(TestCase):
         response = self.client.get(reverse('manager-aircraft-model', kwargs={'pk': 1}))
         self.assertIsInstance(response.context['form'], AircraftModelManagerForm)
 
-    # def test_model_update(self):
-    #     self.client.post(reverse('manager-aircraft-model', kwargs={'pk': 1}), {
-    #         'title': 'Airbus A330 2',
-    #         'description': 'Description',
-    #         'manufacturer': 1,
-    #         'manufacturer_year': 1990,
-    #     })
-    #     aircraft = AircraftModel.objects.get(pk=1)
-    #     self.assertEqual(aircraft.title, 'Airbus A330 2')
-    #
-    # def test_baggage_create(self):
-    #     self.client.post(reverse('manager-service-baggage-create'), {
-    #         'name': 'First additional bag up to 60 kg',
-    #         'description': ''
-    #     })
-    #     baggage = Baggage.objects.get(name='First additional bag up to 60 kg')
-    #     self.assertEqual(baggage.name, 'First additional bag up to 60 kg')
-
     def test_aircraft_manager_list(self):
         response = self.client.get(reverse('manager-aircrafts'))
         self.assertEqual(response.status_code, 200)
@@ -130,3 +111,34 @@ class ServiceManagerTestCase(TestCase):
         })
         aircraft = Aircraft.objects.get(title='A330 3')
         self.assertEqual(aircraft.title, 'A330 3')
+
+
+class AircraftTestCase(TestCase):
+    fixtures = ['aircraft.json', 'airport.json']
+
+    def setUp(self):
+        self.user = User.objects.create_user(username='user', email='user@example.com')
+        self.user.set_password('user')
+        self.user.save()
+
+        self.client = Client()
+        self.client.login(username='user', password='user')
+
+    def test_aircraft_list(self):
+        response = self.client.get(reverse('aircrafts'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('aircrafts', response.context)
+
+    def test_aircraft_filter_list(self):
+        params = {'manufacturer': 1}
+        response = self.client.get(reverse('aircrafts') + '?' + urlencode(params))
+        self.assertEqual(response.status_code, 200)
+        aircrafts = response.context_data['aircrafts']
+        self.assertEqual(aircrafts.count() == 3, True)
+
+    def test_aircraft_filter_single_list(self):
+        params = {'title': 'Airbus A330', 'manufacturer': 1}
+        response = self.client.get(reverse('aircrafts') + '?' + urlencode(params))
+        self.assertEqual(response.status_code, 200)
+        aircrafts = response.context_data['aircrafts']
+        self.assertEqual(aircrafts.count() == 1, True)
