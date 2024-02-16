@@ -1,0 +1,58 @@
+{% extends 'manager/layouts/main_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+
+{% block content %}
+<div class="grid grid-cols-8 gap-4">
+    <div class="col-span-5">
+        <div class="card mb-4">
+            <div class="p-4">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">{% trans 'View ticket checkin status' %}</h2>
+                        <div class="card-subtitle">{% trans 'Detail information about ticket checkin status' %}</div>
+                    </div>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 flex space-x-2">
+                        {{ form.is_checkin }}
+                        <label class="form-label" for="{{ form.is_checkin.auto_id }}">{{ form.is_checkin.label_tag }}</label>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-3">
+                        <div>
+                            <div class="mb-4 border-gray-200 border border-dashed p-4 rounded-xl">
+                                <div class="text-gray-500 text-sm">{% trans 'Ticket seat type' %}</div>
+                                {{ ticket.seat_type }}
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="form-label" for="{{ form.seat_number.auto_id }}">{{ form.seat_number.label_tag }}</label>
+                                    {{ form.seat_number }}
+                                </div>
+                                <div>
+                                    <label class="form-label" for="{{ form.seat_row.auto_id }}">{{ form.seat_row.label_tag }}</label>
+                                    {{ form.seat_row }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if form.errors %}
+                        <div class="text-red-500 text-sm mb-4">{{ form.errors }}</div>
+                    {% endif %}
+                    <div>
+                        <button class="btn btn-primary" type="submit"><i class="las la-save"></i>{% trans 'Save object' %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

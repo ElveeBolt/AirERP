@@ -1,0 +1,80 @@
+{% extends 'manager/layouts/main_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+
+{% block content %}
+<div class="card mb-4">
+    <div class="p-4 pb-0">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">{% trans 'Ticket list' %}</h2>
+                <div class="card-subtitle">{% trans 'List of ticket in AirERP' %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="relative overflow-x-auto rounded-b-xl">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 display" id="dataTable">
+                <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="pl-4 pr-2 py-3">{% trans 'Code' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Flight' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Passenger name' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Seat type' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Seat number' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Is checkin' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'On boarding' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Date booked' %}</th>
+                        <th scope="col" class="pl-2 pr-4 py-3"><span class="sr-only">View</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 last:border-none">
+                        <th scope="row" class="pl-4 pr-2 py-4 font-medium text-gray-900 dark:text-white">
+                            {{ ticket.code }}
+                        </th>
+                        <td class="px-2 py-4">{{ ticket.flight }}</td>
+                        <td class="px-2 py-4">{{ ticket.first_name }} {{ ticket.last_name }}</td>
+                        <td class="px-2 py-4">{{ ticket.seat_type }}</td>
+                        <td class="px-2 py-4">{{ ticket.seat_number }}</td>
+                        <td class="px-2 py-4" id="is_checkin_status_{{ ticket.id }}">
+                            {% if ticket.is_checkin %}
+                                <span class="bg-green-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-green-400">{{ ticket.is_checkin }}</span>
+                            {% else %}
+                                <span class="bg-red-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-red-400">{{ ticket.is_checkin }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-2 py-4" id="is_onboarding_status_{{ ticket.id }}">
+                            {% if ticket.is_onboarding %}
+                                <span class="bg-green-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-green-400">{{ ticket.is_onboarding }}</span>
+                            {% else %}
+                                <span class="bg-red-500 text-white text-xs font-medium me-2 px-3 py-1 rounded dark:bg-gray-700 dark:text-red-400">{{ ticket.is_onboarding }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-2 py-4">{{ ticket.date_booked }}</td>
+                        <td class="pl-2 pr-4 py-4 text-right">
+                            <div class="flex space-x-3">
+                                <a href="{% url 'manager-ticket' pk=ticket.pk %}" class="btn btn-light">
+                                    <i class="las la-file-alt"></i>
+                                    {% trans 'Show detail' %}
+                                </a>
+                                <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="btn btn-light" type="button" data-modal-attr-action="{% url 'manager-ticket-delete' pk=ticket.pk %}" data-modal-attr-title="{{ ticket.code }}">
+                                    <i class="las la-trash-alt"></i>
+                                    {% trans 'Remove' %}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+    {% include 'manager/components/modal-delete.html' %}
+{% endblock content %}

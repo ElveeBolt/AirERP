@@ -1,0 +1,43 @@
+{% extends 'manager/layouts/main_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+
+{% block content %}
+<div class="grid grid-cols-8 gap-4">
+    <div class="col-span-5">
+        <div class="card mb-4">
+            <div class="p-4">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">{% trans 'Create baggage' %}</h2>
+                        <div class="card-subtitle">{% trans 'Detail information about baggage in AirERP' %}</div>
+                    </div>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.name.auto_id }}">{{ form.name.label_tag }}</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.description.auto_id }}">{{ form.description.label_tag }}</label>
+                        {{ form.description }}
+                    </div>
+                    {% if form.errors %}
+                        <div class="text-red-500 text-sm mb-4">{{ form.errors }}</div>
+                    {% endif %}
+                    <div>
+                        <button class="btn btn-primary" type="submit"><i class="las la-save"></i>{% trans 'Save object' %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

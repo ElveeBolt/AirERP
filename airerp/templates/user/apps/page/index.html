@@ -1,0 +1,77 @@
+{% extends 'user/layouts/promo_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+{% block content %}
+<section id="promo">
+    <div class="w-full flex items-center justify-center py-20 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-6">
+                <h1 class="text-4xl font-bold">Air<span class="text-blue-500">ERP</span></h1>
+                <div class="text-xl">{{ subtitle }}</div>
+            </div>
+            <div class="card">
+                <div class="p-4">
+                    <form method="get" action="{% url 'flights' %}">
+                        <div class="flex items-center justify-between space-x-3">
+                            <div class="mb-3 md:mb-0 flex-1">
+                                {{ form.form.departure_from }}
+                            </div>
+                            <div class="mb-3 md:mb-0 flex-1">
+                                {{ form.form.arrival_to }}
+                            </div>
+                            <div class="mb-3 md:mb-0 flex-1">
+                                {{ form.form.seat_class }}
+                            </div>
+                            <div class="mb-3 md:mb-0 flex-1">
+                                {{ form.form.departure_time }}
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary flex-1">
+                                    <i class="las la-plane"></i>
+                                    {% trans 'Search flights' %}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-20">
+    <div class="container px-4 mx-auto">
+        <div class="section-header">
+            <h2>{% trans 'Aircrafts' %}</h2>
+            <div class="subtitle">{% trans 'List of Aircraft Operated by AirERP' %}</div>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+        {% for aircraft in aircrafts %}
+            <div class="card">
+                <a href="{% url 'aircraft' pk=aircraft.pk %}" class="block h-52 overflow-hidden">
+                    <img class="rounded-t-xl" src="{{ aircraft.thumbnail.url }}" />
+                </a>
+                <div class="p-5">
+                    <a href="{% url 'aircraft' pk=aircraft.pk %}">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ aircraft.title }}</h5>
+                    </a>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ aircraft.description | truncatewords:20 }}</p>
+                    <div class="flex">
+                        <a href="{% url 'aircraft' pk=aircraft.pk %}" class="btn btn-primary">
+                            <i class="las la-file-alt"></i>
+                            {% trans 'Read more' %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

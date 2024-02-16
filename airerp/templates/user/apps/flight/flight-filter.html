@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div class="card mb-4">
+    <div class="p-4">
+        <div class="card-header">
+            <h2 class="card-title">{% trans 'Filter' %}</h2>
+            <div class="card-subtitle">{% trans 'Use parameters for data filtering' %}</div>
+        </div>
+        <form method="get">
+            <div class="mb-3">
+                <label class="form-label" for="{{ filter.form.departure_from.auto_id }}">{{ filter.form.departure_from.label_tag }}</label>
+                {{ filter.form.departure_from }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="{{ filter.form.arrival_to.auto_id }}">{{ filter.form.arrival_to.label_tag }}</label>
+                {{ filter.form.arrival_to }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="{{ filter.form.departure_time.auto_id }}">{{ filter.form.departure_time.label_tag }}</label>
+                {{ filter.form.departure_time }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="{{ filter.form.seat_class.auto_id }}">{{ filter.form.seat_class.label_tag }}</label>
+                {{ filter.form.seat_class }}
+            </div>
+            <div class="block">
+                <button type="submit" class="btn btn-primary w-full"><i class="las la-filter"></i>{% trans 'Apply filter' %}</button>
+            </div>
+        </form>
+    </div>
+</div>

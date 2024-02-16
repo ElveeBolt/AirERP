@@ -1,0 +1,79 @@
+<mxfile host="Electron" modified="2024-01-02T13:24:51.373Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="cnBrQhzglkrxE8WS_1Ph" version="22.1.2" type="device">
+  <diagram name="Page-1" id="929967ad-93f9-6ef4-fab6-5d389245f69c">
+    <mxGraphModel dx="957" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" style=";html=1;" />
+        <mxCell id="1" style=";html=1;" parent="0" />
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-24" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="410" y="120" width="240" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-16" value="" style="html=1;whiteSpace=wrap;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry width="240" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-8" value="Register the boarding&lt;br&gt;of the passenger" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry x="20" y="90" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-19" value="Buy ticket" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry x="20" y="20" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-20" value="makes check-in passenger" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry x="20" y="160" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-21" value="add options and take a fee for luggage" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry x="20" y="230" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-22" value="add Gate manager" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry x="20" y="299.5" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-23" value="add&amp;nbsp;Check-in manager" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry x="20" y="370" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-13" value="edit flights" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="hvFf65MqlgdXF7S_YcxQ-24">
+          <mxGeometry x="20" y="440" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-15" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji&quot; color=&quot;#1d2125&quot;&gt;User&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="730" y="180" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-25" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-15" target="hvFf65MqlgdXF7S_YcxQ-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-26" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-1" target="hvFf65MqlgdXF7S_YcxQ-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-1" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji&quot; color=&quot;#1d2125&quot;&gt;Gate manager&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="180" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-27" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-2" target="hvFf65MqlgdXF7S_YcxQ-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-28" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-2" target="hvFf65MqlgdXF7S_YcxQ-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-2" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji&quot; color=&quot;#1d2125&quot;&gt;&lt;div&gt;Check-in manager&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="340" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-29" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-3" target="hvFf65MqlgdXF7S_YcxQ-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-30" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-3" target="hvFf65MqlgdXF7S_YcxQ-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-31" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-3" target="hvFf65MqlgdXF7S_YcxQ-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-32" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-3" target="hvFf65MqlgdXF7S_YcxQ-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-3" target="hvFf65MqlgdXF7S_YcxQ-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-34" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hvFf65MqlgdXF7S_YcxQ-3" target="hvFf65MqlgdXF7S_YcxQ-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hvFf65MqlgdXF7S_YcxQ-3" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji&quot; color=&quot;#1d2125&quot;&gt;Supervisor&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="500" width="30" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

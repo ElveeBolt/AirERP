@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load static %}
+
+<div id="sidebar" class="flex flex-col fixed left-0 pt-20 bg-white w-[280px] h-screen pb-4 px-4 border-r border-gray-200">
+    <div>
+        <div class="font-semibold mb-3">{% trans 'Main menu' %}</div>
+        <ul>
+            {% for link in manager_menu %}
+                <li><a href="{% url link.link %}" class="sidebar-link"><i class="{{ link.icon }}"></i>{{ link.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="mt-auto">
+        <div class="mb-4 text-sm flex items-center space-x-3">
+            <div class="text-2xl w-10 h-10 flex items-center justify-center bg-gray-50 rounded-xl">
+                <i class="las la-user-circle"></i>
+            </div>
+            <div>
+                <div>
+                    {{ user }}
+                    <span class="text-gray-400">({% for group in user.groups.all %}{{ group.name }}{% endfor %})</span>
+                </div>
+                <div>{{ user.email }}</div>
+            </div>
+        </div>
+        <form method="post" action="{% url 'logout' %}" class="w-full">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light w-full">
+                <i class="las la-sign-out-alt"></i>
+                {% trans 'Sign out' %}
+            </button>
+        </form>
+    </div>
+</div>

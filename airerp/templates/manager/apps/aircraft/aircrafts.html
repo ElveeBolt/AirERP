@@ -1,0 +1,69 @@
+{% extends 'manager/layouts/main_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+
+{% block content %}
+<div class="card mb-4">
+    <div class="p-4 pb-0">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">{% trans 'Aircraft list' %}</h2>
+                <div class="card-subtitle">{% trans 'List of aircraft in AirERP' %}</div>
+            </div>
+            <div>
+                <a href="{% url 'manager-aircraft-create' %}" class="btn btn-primary"><i class="las la-plus-circle"></i>{% trans 'Create new' %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="relative overflow-x-auto rounded-b-xl">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 display" id="dataTable">
+                <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="pl-4 pr-2 py-3">{% trans 'Title' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Model' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Current airport' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Total seats' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Window seats' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'Extra legroom' %}</th>
+                        <th scope="col" class="px-2 py-3">{% trans 'aisle seat' %}</th>
+                        <th scope="col" class="pl-2 pr-4 py-3"><span class="sr-only">View</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aircraft in aircrafts %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 last:border-none">
+                        <th scope="row" class="pl-4 pr-2 py-4 font-medium text-gray-900 dark:text-white">
+                            {{ aircraft.title }}
+                        </th>
+                        <td class="px-2 py-4">{{ aircraft.model }}</td>
+                        <td class="px-2 py-4">{{ aircraft.current_airport }}</td>
+                        <td class="px-2 py-4">{{ aircraft.total_seats }}</td>
+                        <td class="px-2 py-4">{{ aircraft.window_seats }}</td>
+                        <td class="px-2 py-4">{{ aircraft.extra_legroom_seats }}</td>
+                        <td class="px-2 py-4">{{ aircraft.aisle_seats }}</td>
+                        <td class="pl-2 pr-4 py-4 text-right">
+                            <div class="flex space-x-3">
+                                <a href="{% url 'manager-aircraft' pk=aircraft.pk %}" class="btn btn-light">
+                                    <i class="las la-file-alt"></i>
+                                    {% trans 'Show detail' %}
+                                </a>
+                                <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="btn btn-light" type="button" data-modal-attr-action="{% url 'manager-aircraft-delete' pk=aircraft.pk %}" data-modal-attr-title="{{ aircraft.name }}">
+                                    <i class="las la-trash-alt"></i>
+                                    {% trans 'Remove' %}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+    {% include 'manager/components/modal-delete.html' %}
+{% endblock content %}

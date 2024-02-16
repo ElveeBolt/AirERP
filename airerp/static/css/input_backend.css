@@ -1,0 +1,147 @@
+/* static/css/input_backend.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.btn {
+    @apply flex items-center justify-center py-2.5 px-5 text-sm font-medium rounded-lg disabled:cursor-not-allowed disabled:text-gray-400
+}
+
+.btn-primary {
+    @apply text-white bg-blue-500 hover:bg-blue-600
+}
+
+.btn-light {
+    @apply border border-gray-200 dark:border-gray-700 bg-white hover:bg-blue-600  hover:text-white
+}
+
+.btn-danger{
+    @apply text-white bg-red-500 hover:bg-red-600
+}
+
+.btn i {
+    @apply text-xl leading-none me-1
+}
+
+.text-danger {
+    @apply text-sm text-red-600 dark:text-red-500
+}
+
+.help-text {
+    @apply mt-1 text-sm text-gray-500 dark:text-gray-400
+}
+
+.link{
+    @apply text-blue-500 hover:text-blue-600 hover:underline
+}
+
+.form-control{
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+}
+
+.form-label{
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white
+}
+
+.card{
+    @apply bg-white border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700
+}
+
+.card-header {
+    @apply mb-4 pb-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between
+}
+
+.card-title {
+    @apply text-xl font-bold text-gray-900 dark:text-white
+}
+
+.card-subtitle {
+    @apply text-gray-500 dark:text-gray-400
+}
+
+header{
+    @apply py-4 mb-4
+}
+
+table.dataTable>thead>tr>th,
+table.dataTable>thead>tr>td,
+table.dataTable>tbody>tr>th,
+table.dataTable>tbody>tr>td{
+    @apply border-0 py-3 px-2
+}
+
+table.dataTable>thead>tr>th:first-child,
+table.dataTable>thead>tr>td:first-child,
+table.dataTable>tbody>tr>th:first-child,
+table.dataTable>tbody>tr>td:first-child{
+    @apply pl-4
+}
+
+table.dataTable>thead>tr>th:last-child,
+table.dataTable>thead>tr>td:last-child,
+table.dataTable>tbody>tr>th:last-child,
+table.dataTable>tbody>tr>td:last-child{
+    @apply pr-4
+}
+
+table.dataTable.stripe>tbody>tr.odd>*,
+table.dataTable.display>tbody>tr.odd>*{
+    @apply shadow-none
+}
+
+table.dataTable.display>tbody>tr.even>.sorting_1,
+table.dataTable.order-column.stripe>tbody>tr.even>.sorting_1,
+table.dataTable.display>tbody>tr.odd>.sorting_1,
+table.dataTable.order-column.stripe>tbody>tr.odd>.sorting_1,
+table.dataTable.hover>tbody>tr:hover>*,
+table.dataTable.display>tbody>tr:hover>*{
+    @apply shadow-none bg-gray-50 dark:bg-gray-700 dark:text-gray-400
+}
+
+table.dataTable.no-footer{
+    @apply border-0
+}
+
+.dataTables_wrapper .dataTables_paginate{
+     @apply float-none text-left p-0 flex flex-wrap items-center my-5
+}
+
+.dataTables_wrapper .dataTables_paginate > span{
+    @apply flex flex-wrap items-center
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    @apply flex items-center justify-center w-9 h-9 rounded-md !border-0
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:active,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+    background: none;
+    @apply bg-blue-500 !text-white
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active{
+    background: none!important;
+}
+
+.dataTables_wrapper .dataTables_filter{
+    @apply float-none text-left px-4 pb-4
+}
+
+.dataTables_wrapper .dataTables_filter input{
+    @apply bg-gray-50 border border-gray-200 m-0 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+}
+
+.sidebar-link{
+    @apply flex items-center py-2
+}
+
+.sidebar-link i {
+    @apply text-2xl w-10 h-10 flex items-center justify-center bg-gray-50 rounded-xl me-2
+}

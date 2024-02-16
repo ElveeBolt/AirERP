@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'dist/css/admin.css' %}">
+    {% block styles %}{% endblock %}
+</head>
+
+<body class="flex min-h-screen bg-gray-50">
+    {% block layout %}{% endblock %}
+</body>
+
+<script src="{% static 'dist/js/admin.js' %}"></script>
+{% block scripts %}{% endblock %}
+</html>

@@ -1,0 +1,19 @@
+{% extends 'manager/layouts/main_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+
+{% block content %}
+<div class="p-4">
+    <h2 class="text-xl font-semibold">{% trans 'Hello' %}, {{ user }}</h2>
+    <div class="text-xl">{{ user.email }}</div>
+    <div>
+        <span class="text-gray-400">{% for group in user.groups.all %}{{ group.name }}{% endfor %}</span>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'manager/layouts/main_layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock title %}
+{% block subtitle %}{{ subtitle }}{% endblock subtitle %}
+
+
+{% block content %}
+<div class="grid grid-cols-8 gap-4">
+    <div class="col-span-5">
+        <div class="card mb-4">
+            <div class="p-4">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">{% trans 'View ticket service' %}</h2>
+                        <div class="card-subtitle">{% trans 'Detail information about ticket service in AirERP' %}</div>
+                    </div>
+                </div>
+                {{ service.service }}
+                {{ service.quantity }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

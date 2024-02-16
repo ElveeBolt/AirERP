@@ -1,0 +1,14 @@
+Django==5.0
+reportlab==4.0.9
+gunicorn==21.2.0
+psycopg2-binary==2.9.6
+celery==5.3.6
+redis==5.0.1
+daphne==4.0.0
+channels==4.0.0
+social-auth-app-django==5.4.0
+cloudinary==1.38.0
+django-filter==23.5
+environs==10.3.0
+django-crispy-forms==2.1
+crispy-tailwind==1.0.0
